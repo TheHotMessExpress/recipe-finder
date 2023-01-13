@@ -1,6 +1,6 @@
 # Recipe Finder
 ## About
-This project is a recipe finder and manager with the core feature of ingredient tracking that lets you find recipes based on what you have on hand.
+This project is a recipe finder and manager with the core feature of ingredient tracking that lets you find recipes based on the food items you have on hand.
 
 ## Meet The Team:
 #### Miranda Henning

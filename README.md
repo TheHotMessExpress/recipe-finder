@@ -5,6 +5,8 @@ This project is a recipe finder and manager with the core feature of ingredient 
 ## Meet The Team:
 #### Miranda Henning
 
+I have 2 more classes at emu. My Major is computer science. I plan to help on the front end with this project
+
 #### Camden Fisher
 
 #### Andrew Moots

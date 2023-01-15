@@ -8,6 +8,7 @@ This project is a recipe finder and manager with the core feature of ingredient 
 I have 2 more classes at emu. My Major is computer science. I plan to help on the front end with this project
 
 #### Camden Fisher
+Currently in my second to last semester at EMU. Graduating in Fall 2023 with a BS in Computer Science.
 
 #### Andrew Moots
 This is my final semester at EMU, majoring in Computer Science. I enjoy designing databases and backend functionality.

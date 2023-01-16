@@ -21,8 +21,23 @@ function Home(){
  const [name, setName] = useState("");
 
  const handleSubmit = (event) => {
-   event.preventDefault();
-   setNames([...names, name]);
+  console.log("handleSubmit called");
+  event.preventDefault();
+  setNames([name]);
+  fetch("http://localhost:8080/add_name.php?name="+name, {
+      "method": "GET",
+      "headers": {
+        "content-type": "application/json",
+        "accept": "application/json"
+      }
+    })
+    .then(response => response.json())
+    .then(response => {
+      console.log(response)
+    })
+    .catch(err => {
+      console.log(err);
+    });
    setName("");
  };
 

@@ -27,7 +27,7 @@ function Home(){
   fetch("http://localhost:8080/add_name.php?name="+name, {
       "method": "GET",
       "headers": {
-        "content-type": "application/json",
+        "content-type": "text/plain",
         "accept": "application/json"
       }
     })

@@ -78,9 +78,32 @@ function Home(){
 }
 
 function SecondPage() {
+  const [names, setNames] = useState([]);
+
+  // load list of all names
+  fetch("http://localhost:8080/get_names.php", {
+    "method": "GET",
+    "headers": {
+      "content-type": "text/plain",
+      "accept": "application/json"
+    }
+  })
+  .then(response => response.json())
+  .then(response => {
+    setNames([...response['data']]);
+  })
+  .catch(err => {
+    console.log(err);
+  });
+
   return (
     <div>
       <h1>Here is the second page of our application!</h1>
+      <ul>
+        {names.map((name, index) => (
+          <p key={index}>{name}</p>
+        ))}
+      </ul>
       <Link to="/">
         Go back to home page
       </Link>

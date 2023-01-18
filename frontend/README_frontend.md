@@ -1,0 +1,1 @@
+All frontend source code should be put within the frontend folder.

@@ -1,0 +1,1 @@
+All backend source code should be put within the backend folder.

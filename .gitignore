@@ -1,3 +1,12 @@
+# react build files
 **/build/
+
+# npm files
 **/node_modules/
 .DS_store
+
+# custom ignore
+**/config.*
+
+# docker files
+.env

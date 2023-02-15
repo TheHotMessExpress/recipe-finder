@@ -1,18 +1,32 @@
+/*
+.main{
+    display: flex;
+    height: 100vh;
+    width: 100%;
+    align-items: center;
+    flex-direction: column;
+    row-gap: 20px;
+}
+*/
+
+
 body {
-  font-family: 'Times New Roman', Times, serif;
-  background-color: #282c34;
-  color: white;
+    font-family: 'Times New Roman', Times, serif;
+    /*background-color: #282c34;*/
+    background-color: #3d3d5c;
+    color: white;
 }
 
 
-#nav{
-  bottom:2%;
-  margin: auto;
-  position: absolute;
-  left: 0px;
-  height: 40px;
-  width: 100%;
-  text-align: center;
+#nav {
+    bottom: 2%;
+    margin: auto;
+    position: absolute;
+    left: 0px;
+    height: 40px;
+    width: 100%;
+    text-align: center;
+    overflow:auto;
 }
 
 #nav a {
@@ -25,4 +39,40 @@ body {
 
 h1{
   text-align:center;
+}
+
+
+
+/*someRecipe style*/
+#base {
+    color: lightblue;
+    text-align: left;
+}
+
+img {
+    height: 150px;
+    display: block;
+    margin-left: 30%;
+    margin-right: auto;
+    margin-top: auto;
+}
+h3 {
+    text-align: center;
+    margin-right: 30%;
+    font-size: 30px;
+}
+h4 {
+    margin-left: 27%;
+    font-size: 20px;
+    list-style-position: inside
+    
+}
+h5 {
+    margin-left: 30%;
+    font-size: 15px;
+    width: 600px;
+    background-color: #373d48;
+    border-style: solid;
+    border-color: #00001a;
+    border-width: 5px;
 }

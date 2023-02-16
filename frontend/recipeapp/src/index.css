@@ -26,3 +26,34 @@ body {
 h1{
   text-align:center;
 }
+
+/* Currently used for "FoodSearch" styling */
+.main {
+  display: flex;
+  height: 100vh;
+  width: 100%;
+  align-items: center;
+  flex-direction: column;
+  row-gap: 20px;
+}
+
+.search {
+position: absolute;
+}
+
+.search input {
+width: 300px;
+height: 25px;
+}
+
+button.FoodSearchButton{
+margin-left: 10px;
+margin-top: 35px;
+position: absolute;
+}
+
+.foodSearch {
+border-radius: 25px;
+border: 2px solid #ffffff;
+padding: 20px;
+}

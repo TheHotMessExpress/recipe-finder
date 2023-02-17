@@ -50,10 +50,25 @@ margin-right: auto;
 margin-left: 10px;
 }
 
+/* size will have to be adjusted when API is displaying correctly */
 .searchResults {
 border-radius: 25px;
 border: 2px solid #ffffff;
 padding: 20px;
-width: 400px;
-height: 500px;
+width: 500px;
+height: 400px;
+overflow-y:auto
+}
+
+h3{
+  color: white;
+  text-align: center;
+}
+
+.searchResultsImage{
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 50%;
+  cursor: pointer;
 }

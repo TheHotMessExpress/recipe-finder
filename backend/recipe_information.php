@@ -1,6 +1,7 @@
 <?php
 
 require("config.php");
+require("./functions/func_ingredients.php");
 
 header("Content-type:application/json");
 
@@ -8,9 +9,13 @@ header("Content-type:application/json");
 $query_id = (isset($_GET['query']) ? $_GET['query'] : "");
 
 if($query_id != ""){
+    // fetch info from spoontacular
+    $ingredients = getRecipeIngredients($query_id);
+    $RecipeInformation = getRecipeInformation($query_id);
+
     // stub out response for front end
-    echo json_encode(array("success" => true, "title" => "TestTitle", "image" => 
-    "https://spoonacular.com/recipeImages/716429-556x370.jpg", "ingredients" => array("Ingredient1", "Ingredient2"), "source" => "http://fullbellysisters.blogspot.com/2012/06/pasta-with-garlic-scallions-cauliflower.html"));
+    echo json_encode(array("success" => true, "title" => $RecipeInformation[0]["title"], "image" => 
+    $RecipeInformation[0]["image"], "source" => $RecipeInformation[0]['sourceUrL'], "ingredients" => array($ingredients)));
 }else{
      // invalid (empty) string
      echo json_encode(array("success" => false, "error" => array("message" => 

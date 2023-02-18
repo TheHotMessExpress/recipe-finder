@@ -34,11 +34,9 @@ const FoodSearch = () => {
               setRecipes(response["data"][i]);
             }
           } else {
-            // display no results msg - TO DO
+            setRecipes([]);
           }
-        } else {
-          // display error msg
-        }
+        } 
       })
       .catch((err) => {
         console.log(err);
@@ -64,17 +62,21 @@ const FoodSearch = () => {
         </form>
 
         <div id="recipe-results" className="searchResults">
-          {recipes.map((recipe) => (
-            <div key={recipe.id}>
-              <h3>{recipe.title}</h3>
-              <img
-                className="searchResultsImage"
-                src={recipe.image}
-                alt={recipe.title}
-                onClick={(event) => (window.location.href = "/some-recipe")}
-              />
-            </div>
-          ))}
+          {recipes.length > 0 ? (
+            recipes.map((recipe) => (
+              <div key={recipe.id}>
+                <h3>{recipe.title}</h3>
+                <img
+                  className="searchResultsImage"
+                  src={recipe.image}
+                  alt={recipe.title}
+                  onClick={(event) => (window.location.href = "/some-recipe")}
+                />
+              </div>
+            ))
+          ) : (
+            <p>No results to display</p>
+          )}
         </div>
       </div>
     </div>

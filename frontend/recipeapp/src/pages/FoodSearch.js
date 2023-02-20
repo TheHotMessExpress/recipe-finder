@@ -70,7 +70,7 @@ const FoodSearch = () => {
                   className="searchResultsImage"
                   src={recipe.image}
                   alt={recipe.title}
-                  onClick={(event) => (window.location.href = "/some-recipe")}
+                  onClick={function(){localStorage.setItem("recipe_id", recipe.id); window.location.href = "/some-recipe";}}
                 />
               </div>
             ))

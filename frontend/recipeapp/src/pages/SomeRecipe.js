@@ -1,40 +1,71 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { useState } from "react";
 import '../index.css';
+import "../config.js";
 
 const SomeRecipe = () => {
+    const [inputID] = useState("71090");
+    const [title, setTitle] = useState("");
+    const [image, setImage] = useState('');
+    const [source, setSource] = useState("");
+    const [ingredients, setIngredients] = useState([]);
+    useEffect(() => {
+        fetch(global.config.api_url + "/recipe_information.php?query=" + inputID, {
+            method: "GET",
+            headers: {
+              "content-type": "text/plain",
+              accept: "application/json",
+            },
+          })
+          .then((response) => response.json())
+          .then((response) => {
+            console.log(response);
+            if (response["success"] == true){
+                setImage(response['image']);
+                setTitle(response["title"]);
+                setSource(response["source"]);
+                if(response["ingredients"].length > 0){
+                    for (let i = 0; i < response["ingredients"].length; i++) {
+                        setIngredients(response["ingredients"][i]);
+                      }
+                }
+                else{
+                    setIngredients([]); 
+                }
+                
+                
+            }
+
+          })
+          .catch((err) => {
+            console.log(err);
+
+          });
+            
+
+        }, []);
     return (
         <div className="main">
         
       <h1>
-        This is the "Some Recipe" Page
+        {title}
       </h1>
           <body>
                 <p1 id = "base">
 
-                    <img src="https://sugarspunrun.com/wp-content/uploads/2016/03/easy-chocolate-cupcakes-1-of-1-6.jpg" alt="cupcake" />
+                    <img src= {image} alt="cupcake" />
 
-                    <h3 > I am a title</h3>
-                    <h4 >
-                        <ul>
-                            <li>I am a list</li>
-                            <li>I am a list too</li>
-                            <li>I am a list as well</li>
-                        </ul>
+                    <h3 >{title}</h3>
+                    <h4>
+                    <a href={source} target="_blank">Recipe Link</a>
                     </h4>
                     <h5>
-                        <ol>
-                            <li>These are instructions</li><br></br>
-                            <li>look at me</li><br></br>
-                            <li>yee</li><br></br>
-                            <li>I am testing</li><br></br>
-                            <li>results of</li><br></br>
-                            <li>a long list</li><br></br>
-                            <li>a</li><br></br>
-                            <li>a</li><br></br>
-                            <li>a</li><br></br>
-                            <li>a</li><br></br>
+                        <ul>
+                        {ingredients.map((ingredient, index) => (
+                <li key={index}>{ingredient["name"]} {ingredient["amountValue"]} {ingredient["amountUnit"]}</li>
+              ))}
                             
-                        </ol>
+                        </ul>
                     </h5>
 
 

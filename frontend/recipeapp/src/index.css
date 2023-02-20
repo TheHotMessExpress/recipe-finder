@@ -26,3 +26,49 @@ body {
 h1{
   text-align:center;
 }
+
+/* Currently used for "FoodSearch" styling */
+.main {
+  display: flex;
+  height: 100vh;
+  width: 100%;
+  align-items: center;
+  flex-direction: column;
+  row-gap: 20px;
+}
+
+.search {
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 10px;
+  width: 40%;
+}
+
+button.foodSearchButton{
+margin-left: auto;
+margin-right: auto;
+margin-left: 10px;
+}
+
+/* size will have to be adjusted when API is displaying correctly */
+.searchResults {
+border-radius: 25px;
+border: 2px solid #ffffff;
+padding: 20px;
+width: 500px;
+height: 400px;
+overflow-y:auto
+}
+
+h3{
+  color: white;
+  text-align: center;
+}
+
+.searchResultsImage{
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 50%;
+  cursor: pointer;
+}

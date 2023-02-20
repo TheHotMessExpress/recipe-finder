@@ -34,6 +34,8 @@ const SomeRecipe = () => {
                 }
                 
                 
+            }else{
+                alert("No recipe found");
             }
 
           })

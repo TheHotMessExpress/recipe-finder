@@ -20,8 +20,11 @@ function getRecipeIngredients($id){
     // format data
     $response = json_decode($result, true);
 
-    foreach($response['ingredients'] as $ingredient){
-        $IngredientList[] = array("name" => $ingredient['name'], "amountValue" => $ingredient['amount']['us']['value'], "amountUnit" => $ingredient['amount']['us']['unit'] );
+    $IngredientList = array();
+    if(isset($response['ingredients'])){
+        foreach($response['ingredients'] as $ingredient){
+            $IngredientList[] = array("name" => $ingredient['name'], "amountValue" => $ingredient['amount']['us']['value'], "amountUnit" => $ingredient['amount']['us']['unit'] );
+        }
     }
 
     // return list of Ingredients
@@ -47,8 +50,11 @@ function getRecipeInformation($id){
 
     // format data
     $response = json_decode($result, true);
+    $RecipeInformation = array();
 
-    $RecipeInformation[] = array("title" => $response['title'], "sourceUrL" => $response['sourceUrl'], "image" => $response['image']);
+    if(isset($response['title']) && isset($response['sourceUrl'])  && isset($response['image'])){
+        $RecipeInformation = array("title" => $response['title'], "sourceUrL" => $response['sourceUrl'], "image" => $response['image']);
+    }
 
     // return list of Information
     return $RecipeInformation;

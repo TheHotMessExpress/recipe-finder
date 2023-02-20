@@ -13,9 +13,13 @@ if($query_id != ""){
     $ingredients = getRecipeIngredients($query_id);
     $RecipeInformation = getRecipeInformation($query_id);
 
-    // stub out response for front end
-    echo json_encode(array("success" => true, "title" => $RecipeInformation[0]["title"], "image" => 
-    $RecipeInformation[0]["image"], "source" => $RecipeInformation[0]['sourceUrL'], "ingredients" => array($ingredients)));
+    // response for front end
+    if(Count($ingredients) == 0 || Count($RecipeInformation) == 0){
+        echo json_encode(array("success" => false, "error" => array("message" => "Missing recipe information")));
+    }else{
+        echo json_encode(array("success" => true, "title" => $RecipeInformation["title"], "image" => 
+        $RecipeInformation["image"], "source" => $RecipeInformation['sourceUrL'], "ingredients" => array($ingredients)));
+    }
 }else{
      // invalid (empty) string
      echo json_encode(array("success" => false, "error" => array("message" => 

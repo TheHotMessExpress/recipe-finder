@@ -4,7 +4,7 @@ import '../index.css';
 import "../config.js";
 
 const SomeRecipe = () => {
-    const [inputID] = useState("71090");
+    const inputID = localStorage.getItem("recipe_id");
     const [title, setTitle] = useState("");
     const [image, setImage] = useState('');
     const [source, setSource] = useState("");

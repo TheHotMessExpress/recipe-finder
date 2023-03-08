@@ -59,3 +59,41 @@ function getRecipeInformation($id){
     // return list of Information
     return $RecipeInformation;
 }
+
+// returns list of categories available
+function getAllCategories(){
+    // get mysqli object
+    global $conn;
+
+    // query all categories
+    $sql = "SELECT * FROM `ingredient_categories` ORDER BY `name` ASC";
+    $stmt = $conn->prepare($sql);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    while($item = $result->fetch_assoc()){
+        $list[] = $item;
+    }
+    $stmt->close();
+
+    // return list
+    return $list;
+}
+
+// returns list of ingredients available
+function getAllIngredients(){
+    // get mysqli object
+    global $conn;
+
+    // query all ingredients
+    $sql = "SELECT * FROM `ingredients` ORDER BY `name` ASC";
+    $stmt = $conn->prepare($sql);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    while($item = $result->fetch_assoc()){
+        $list[] = $item;
+    }
+    $stmt->close();
+
+    // return list
+    return $list;
+}

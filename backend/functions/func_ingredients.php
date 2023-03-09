@@ -97,3 +97,86 @@ function getAllIngredients(){
     // return list
     return $list;
 }
+
+function addUserIngredient($user_id, $ingredient_id){
+    // get mysqli object
+    global $conn;
+
+    // insert query
+    $sql = "INSERT INTO `user_ingredients` SET `user_id` = ?, `ingredient_id` = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("ii", $user_id, $ingredient_id);
+    $stmt->execute();
+    $stmt->close();
+}
+
+function clearUserIngredients($user_id){
+    // get mysqli object
+    global $conn;
+
+    // query all ingredients
+    $sql = "DELETE 
+            FROM `user_ingredients` AS `ui`
+            WHERE `ui`.`user_id` = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("i", $user_id);
+    $stmt->execute();
+    $stmt->close();
+}
+
+function getUserIngredients($user_id){
+    // get mysqli object
+    global $conn;
+
+    // query all ingredients
+    $sql = "SELECT `i`.`id`, `i`.`name`
+            FROM `user_ingredients` AS `ui`
+            JOIN `ingredients` AS `i` ON `i`.`id` = `ui`.`ingredient_id`
+            WHERE `ui`.`user_id` = ? ORDER BY `i`.`name` ASC";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("i", $user_id);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    while($item = $result->fetch_assoc()){
+        $list[] = $item;
+    }
+    $stmt->close();
+
+    // return list
+    return $list;
+}
+
+function getUserIdByToken($token){
+    global $conn;
+
+    // check if user exists
+    $sql = "SELECT `user_id` FROM `user_tokens` WHERE `token` = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("s", $token);
+    $stmt->execute();
+    $result = $stmt->get_result()->fetch_assoc();
+    $stmt->close();
+
+    // user doesn't exist
+    if(!isset($result) || !isset($result['user_id'])){
+        // create user
+        $sql = "INSERT INTO `users` SET `anonymous` = 1";
+        $stmt = $conn->prepare($sql);
+        $stmt->execute();
+        $stmt->close();
+        $user_id = $conn->insert_id;
+
+        // associate token
+        $sql = "INSERT INTO `user_tokens` SET `user_id` = ?, `token` = ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("is", $user_id, $token);
+        $stmt->execute();
+        $stmt->close();
+
+        // return user id
+        return $user_id;
+    }else{
+        // user exists
+        return $result['user_id'];
+    }
+}

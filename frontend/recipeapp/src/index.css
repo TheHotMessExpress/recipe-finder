@@ -18,13 +18,15 @@ h1{
     position: fixed;
     bottom: 0;
     width: 100%;
+    text-align: center;
+    padding-left: 32%;
+    padding-right: 32%;
   }
   
   #nav a {
     float: left;
     display: block;
     color: #f2f2f2;
-    text-align: center;
     padding: 14px 16px;
     text-decoration: none;
     font-size: 17px;
@@ -35,8 +37,8 @@ h1{
     color: black;
   }
   
-/* FoodSearch */
 
+/* FoodSearch */
 form#searchbar{
     text-align: center;
     padding-bottom: 20px;

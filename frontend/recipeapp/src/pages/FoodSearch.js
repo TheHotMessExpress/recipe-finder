@@ -56,7 +56,11 @@ const FoodSearch = () => {
             onChange={inputHandler}
             placeholder="Search"
           />
-
+          <button disabled={!inputText} className="foodSearchButton">
+            Search
+          </button>
+          <br/>
+          <label for="ingredient_checkbox">Prioritize on-hand ingredients (in pantry)</label>
           <input
             type="checkbox"
             checked={useIngredients}
@@ -65,11 +69,8 @@ const FoodSearch = () => {
                 ? setUseIngredients(1)
                 : setUseIngredients(0);
             }}
+            id="ingredient_checkbox"
           />
-
-          <button disabled={!inputText} className="foodSearchButton">
-            Click me
-          </button>
         </form>
 
         <div id="recipe-results" className="searchResults">

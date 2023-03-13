@@ -5,6 +5,7 @@ import "../config.js";
 
 const FoodSearch = () => {
   const [inputText, setInputText] = useState("");
+  const [useIngredients, setUseIngredients] = useState(0);
   const [recipes, setRecipes] = useState([]);
 
   let inputHandler = (e) => {
@@ -15,7 +16,7 @@ const FoodSearch = () => {
   const handleSubmit = (event) => {
     event.preventDefault();
     console.log("handleSubmit called");
-    fetch(global.config.api_url + "/search_recipes.php?query=" + inputText, {
+    fetch(global.config.api_url + "/search_recipes.php?query=" + inputText + "&use_ingredients=" + useIngredients + "&token=" + localStorage.getItem("user_token"), {
       method: "GET",
       headers: {
         "content-type": "text/plain",
@@ -54,6 +55,16 @@ const FoodSearch = () => {
             type="text"
             onChange={inputHandler}
             placeholder="Search"
+          />
+
+          <input
+            type="checkbox"
+            checked={useIngredients}
+            onChange={function(e) {
+              e.target.checked
+                ? setUseIngredients(1)
+                : setUseIngredients(0);
+            }}
           />
 
           <button disabled={!inputText} className="foodSearchButton">

@@ -137,6 +137,7 @@ function getUserIngredients($user_id){
     $stmt->bind_param("i", $user_id);
     $stmt->execute();
     $result = $stmt->get_result();
+    $list = array();
     while($item = $result->fetch_assoc()){
         $list[] = $item;
     }

@@ -37,7 +37,14 @@ const FoodSearch = () => {
           } else {
             setRecipes([]);
           }
-        } 
+        } else {
+          setRecipes([]);
+
+          // see why it failed
+          if(response['error']['message'] == "Empty User Pantry"){
+            alert("You have no items in your pantry so you can't filter by ingredients.");
+          }
+        }
       })
       .catch((err) => {
         console.log(err);

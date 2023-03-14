@@ -18,11 +18,16 @@ if($query_string != ""){
     $user_id = getUserIdByToken($token);
     // get user ingredients
     $IngredientList = getUserIngredients($user_id);
+    if($use_ingredients == 1 && empty($IngredientList)){
+        echo json_encode(array("success" => false, "error" => array("message" => "Empty User Pantry")));
+    }
+    else{
     // fetch info from spoontacular
     $recipes = getRecipes($query_string, $user_id, $IngredientList, $use_ingredients);
 
     // stub out response for front end
     echo json_encode(array("success" => true, "data" => array($recipes)));
+    }
 }else{
     // invalid (empty) token
     echo json_encode(array("success" => false, "error" => array("message" => "Invalid (empty) user token")));

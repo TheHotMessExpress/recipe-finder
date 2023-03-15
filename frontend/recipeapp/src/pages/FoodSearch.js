@@ -44,11 +44,11 @@ const FoodSearch = () => {
   };
 
   return (
-    <div className="main">
+    <body id="foodSearchDiv">
       <h1>This is "FoodSearch" Page</h1>
 
       <div>
-        <form autoComplete="off" onSubmit={handleSubmit}>
+        <form autoComplete="off" id="searchbar" onSubmit={handleSubmit}>
           <input
             className="search"
             type="text"
@@ -56,22 +56,24 @@ const FoodSearch = () => {
             placeholder="Search"
           />
 
-          <button disabled={!inputText} className="foodSearchButton">
+          <button disabled={!inputText} id="foodSearchButton">
             Click me
           </button>
         </form>
 
-        <div id="recipe-results" className="searchResults">
+        <div id="recipe-results">
           {recipes.length > 0 ? (
             recipes.map((recipe) => (
               <div key={recipe.id}>
                 <h3>{recipe.title}</h3>
+                <div class="container">
                 <img
-                  className="searchResultsImage"
+                  id="searchResultsImage"
                   src={recipe.image}
                   alt={recipe.title}
                   onClick={function(){localStorage.setItem("recipe_id", recipe.id); window.location.href = "/some-recipe";}}
                 />
+                </div>
               </div>
             ))
           ) : (
@@ -79,7 +81,7 @@ const FoodSearch = () => {
           )}
         </div>
       </div>
-    </div>
+    </body>
   );
 };
 

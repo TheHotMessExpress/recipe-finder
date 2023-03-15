@@ -118,4 +118,9 @@ p#developerDiscription {
 
 p#siteDescription{
     text-align: center;
+    font-size: 20px;
+}
+
+h1#title_element{
+    font-size: 50px;
 }

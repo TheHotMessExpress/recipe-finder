@@ -6,6 +6,7 @@ import andrew from "../images/andrew.png";
 import jesse from "../images/jesse.jpg";
 import miranda from "../images/miranda.jpg";
 import Camden from "../images/Camden.jpg";
+import "../index.css";
   
 const Home = () => {
 
@@ -27,7 +28,7 @@ const Home = () => {
         <p id="developerDiscription">This is my final semester at EMU, majoring in Computer Science. I enjoy designing databases and backend functionality.</p>
         </div>
         <div id="developerCard"><h1 id="developerName">Camden</h1>
-        <img  src={Camden}></img>
+        <img id="developerPicture"  src={Camden}></img>
         <p id="developerDiscription">Currently in my second to last semester at EMU. Graduating in Fall 2023 with a BS in Computer Science. </p>
         </div>
         <div id="developerCard"><h1 id="developerName">Jesse</h1>
@@ -35,7 +36,7 @@ const Home = () => {
         <p id="developerDiscription">I am starting my final year at EMU, graduating with a BA in Computer Science in the Summer or Fall semester.</p>
         </div>
         <div id="developerCard"><h1 id="developerName">Miranda</h1>
-        <img  src={miranda}></img>
+        <img id="developerPicture" src={miranda}></img>
         <p id="developerDiscription">I have 2 more classes at emu. My Major is computer science. I plan to help on the front end with this project </p>
         </div>
         </div>

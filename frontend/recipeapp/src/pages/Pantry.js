@@ -8,6 +8,8 @@ const Pantry = () => {
       <h1>
       Ingredients Pantry
       </h1>
+      <input type={'text'} id="ingredients_query" placeholder="Filter ingredients..."
+        onInput={filterIngredients}></input>
       <div id="categories_container"> </div>
       <button id="save_ingredients" style={{display: 'none'}} onClick={saveIngredients}>Save</button>
     </div>
@@ -57,8 +59,8 @@ function displayIngredients(data){
   for(let i = 0; i < data['ingredients'].length; i++){
     document.getElementById(data['ingredients'][i]['category_id']+"_container").innerHTML += 
       '<div class="ingredient"><input type="checkbox" id="ingredient_'+data['ingredients'][i]['id']+'" '+
-      (data['ingredients'][i]['checked'] == 1 ? 'checked' : '') + '>'+
-      data['ingredients'][i]['name']+'</input></div>';
+      (data['ingredients'][i]['checked'] == 1 ? 'checked' : '') + '></input>'+
+      '<label>'+data['ingredients'][i]['name']+'</label></div>';
   }
 }
 
@@ -106,6 +108,51 @@ function saveIngredients(){
     .catch((err) => {
       console.log(err);
     });
+}
+
+// hides ingredients if they don't match the query
+function filterIngredients(){
+  // get query
+  let query = document.getElementById('ingredients_query').value;
+
+  // get ingredients
+  let ing_eles = document.getElementsByClassName("ingredient");
+
+  if(query == ""){
+    // show all ingredients 
+    for(let i = 0; i < ing_eles.length; i++){
+      ing_eles[i].style.display = '';
+      ing_eles[i].querySelectorAll('label')[0].innerText = ing_eles[i].querySelectorAll('label')[0].innerText;
+    }
+  }else{
+    // filter
+    let ing_eles = document.getElementsByClassName("ingredient");
+  
+    for(let i = 0; i < ing_eles.length; i++){
+      let label = ing_eles[i].querySelectorAll('label')[0];
+
+      if(label.innerText.toLowerCase().includes(query.toLowerCase())){
+        // highlight
+        label.innerHTML = boldLabel(label.innerText, query);
+      }else{
+        // hide
+        ing_eles[i].style.display = 'none';
+      }
+    }
+  }
+}
+
+// inspiration: https://stackoverflow.com/questions/29896907/bold-part-of-string
+// bolds part of string that matches the query
+function boldLabel(label_text, query){
+  const n = label_text.toUpperCase();
+  const q = query.toUpperCase();
+  const x = n.indexOf(q);
+  if (!q || x === -1) {
+      return label_text; // not possible
+  }
+  const l = q.length;
+  return label_text.substr(0, x) + '<b>' + label_text.substr(x, l) + '</b>' + label_text.substr(x + l);
 }
 
 // returns the stored user token if it exists

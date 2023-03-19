@@ -31,48 +31,30 @@ const SomeRecipe = () => {
                 }
                 else{
                     setIngredients([]); 
-                }
-                
-                
+                }  
             }else{
                 alert("No recipe found");
             }
-
           })
           .catch((err) => {
             console.log(err);
-
           });
-            
-
         }, []);
-    return (
-        <div className="main">
-        
+   
+   
+        return (
+        <div>
       <h1>
         {title}
       </h1>
           <body>
-                <p1 id = "base">
-
-                    <img src= {image} alt="cupcake" />
-
-                    <h3 >{title}</h3>
-                    <h4>
-                    <a href={source} target="_blank">Recipe Link</a>
-                    </h4>
-                    <h5>
-                        <ul>
+                    <img id="someRecipeImage" src={image} />
+                        <ul id="someRecipeList">
+                        <a id="someRecipeLink" href={source} target="_blank">Recipe Link</a>
                         {ingredients.map((ingredient, index) => (
                 <li key={index}>{ingredient["name"]} {ingredient["amountValue"]} {ingredient["amountUnit"]}</li>
-              ))}
-                            
+              ))} 
                         </ul>
-                    </h5>
-
-
-              </p1>
-        
           </body>
     </div>
   );

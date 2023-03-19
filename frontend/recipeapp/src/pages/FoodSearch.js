@@ -5,6 +5,7 @@ import "../config.js";
 
 const FoodSearch = () => {
   const [inputText, setInputText] = useState("");
+  const [useIngredients, setUseIngredients] = useState(0);
   const [recipes, setRecipes] = useState([]);
 
   let inputHandler = (e) => {
@@ -15,7 +16,7 @@ const FoodSearch = () => {
   const handleSubmit = (event) => {
     event.preventDefault();
     console.log("handleSubmit called");
-    fetch(global.config.api_url + "/search_recipes.php?query=" + inputText, {
+    fetch(global.config.api_url + "/search_recipes.php?query=" + inputText + "&use_ingredients=" + useIngredients + "&token=" + localStorage.getItem("user_token"), {
       method: "GET",
       headers: {
         "content-type": "text/plain",
@@ -36,7 +37,14 @@ const FoodSearch = () => {
           } else {
             setRecipes([]);
           }
-        } 
+        } else {
+          setRecipes([]);
+
+          // see why it failed
+          if(response['error']['message'] == "Empty User Pantry"){
+            alert("You have no items in your pantry so you can't filter by ingredients.");
+          }
+        }
       })
       .catch((err) => {
         console.log(err);
@@ -55,10 +63,21 @@ const FoodSearch = () => {
             onChange={inputHandler}
             placeholder="Search"
           />
-
-          <button disabled={!inputText} id="foodSearchButton">
-            Click me
+          <button disabled={!inputText} id="foodSearchButton" className="foodSearchButton">
+            Search
           </button>
+          <br/>
+          <label for="ingredient_checkbox">Prioritize on-hand ingredients (in pantry)</label>
+          <input
+            type="checkbox"
+            checked={useIngredients}
+            onChange={function(e) {
+              e.target.checked
+                ? setUseIngredients(1)
+                : setUseIngredients(0);
+            }}
+            id="ingredient_checkbox"
+          />
         </form>
 
         <div id="recipe-results">

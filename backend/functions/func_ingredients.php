@@ -80,13 +80,18 @@ function getAllCategories(){
 }
 
 // returns list of ingredients available
-function getAllIngredients(){
+// marks ingredients if they are selected by user
+function getAllIngredients($user_id){
     // get mysqli object
     global $conn;
 
     // query all ingredients
-    $sql = "SELECT * FROM `ingredients` ORDER BY `name` ASC";
+    $sql = "SELECT `i`.*, IF(`ui`.`id` > 0, 1, 0) AS `checked`
+    FROM `ingredients` AS `i`
+    LEFT JOIN `user_ingredients` AS `ui` ON `ui`.`ingredient_id` = `i`.`id` AND `ui`.`user_id` = ?
+    ORDER BY `name` ASC";
     $stmt = $conn->prepare($sql);
+    $stmt->bind_param("i", $user_id);
     $stmt->execute();
     $result = $stmt->get_result();
     while($item = $result->fetch_assoc()){

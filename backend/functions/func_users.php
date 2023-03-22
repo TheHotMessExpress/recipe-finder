@@ -16,7 +16,7 @@ function isEmailAvailable($email){
     return !isset($result['email']) || $result['email'] === "";
 }
 
-// TODO
+// generates a token for a user and stores it in the db
 function generateUserToken($user_id){
     global $conn;
 

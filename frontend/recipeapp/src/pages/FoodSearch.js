@@ -2,6 +2,7 @@ import React from "react";
 import { useState } from "react";
 import "../index.css";
 import "../config.js";
+import notebook from "../images/notebook.png";
 
 const FoodSearch = () => {
   const [inputText, setInputText] = useState("");
@@ -77,10 +78,11 @@ const FoodSearch = () => {
                 : setUseIngredients(0);
             }}
             id="ingredient_checkbox"
-          />
+                  />
+                  <br></br> <br></br> <br></br>
         </form>
 
-        <div id="recipe-results">
+              <div id="recipe-results">
           {recipes.length > 0 ? (
             recipes.map((recipe) => (
               <div key={recipe.id}>
@@ -97,7 +99,9 @@ const FoodSearch = () => {
             ))
           ) : (
             <p>No results to display</p>
-          )}
+
+                  )}
+
         </div>
       </div>
     </body>

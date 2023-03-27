@@ -44,6 +44,21 @@ form#searchbar{
     padding-bottom: 20px;
 }
 
+div#nutritionFiltering{
+    text-align: center;
+    padding-bottom: 10px;
+}
+
+label#nutritionFilteringLabel{
+    width: 200px;
+    display: inline-block;
+    text-align: right;
+}
+
+input#nutritionFilteringInput {
+    width: 30px;
+}
+
 /* button#foodSearchButton{
 
 } */

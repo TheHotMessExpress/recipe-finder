@@ -41,7 +41,7 @@ const FoodSearch = () => {
           setRecipes([]);
 
           // see why it failed
-          if(response['error']['message'] == "Empty User Pantry"){
+          if(response['error']['message'] === "Empty User Pantry"){
             alert("You have no items in your pantry so you can't filter by ingredients.");
           }
         }
@@ -63,22 +63,46 @@ const FoodSearch = () => {
             onChange={inputHandler}
             placeholder="Search"
           />
-          <button disabled={!inputText} id="foodSearchButton" className="foodSearchButton">
+          <button
+            disabled={!inputText}
+            id="foodSearchButton"
+            className="foodSearchButton">
             Search
           </button>
-          <br/>
-          <label for="ingredient_checkbox">Prioritize on-hand ingredients (in pantry)</label>
+          <br />
+          <label for="ingredient_checkbox">
+            Prioritize on-hand ingredients (in pantry)
+          </label>
           <input
             type="checkbox"
             checked={useIngredients}
-            onChange={function(e) {
-              e.target.checked
-                ? setUseIngredients(1)
-                : setUseIngredients(0);
+            onChange={function (e) {
+              e.target.checked ? setUseIngredients(1) : setUseIngredients(0);
             }}
             id="ingredient_checkbox"
           />
         </form>
+
+
+        {/* Nutrition Filtering  */}
+        <div id="nutritionFiltering">
+          <label id="nutritionFilteringLabel">
+            Max Daily Calories:
+            <input id="nutritionFilteringInput" type="text" />
+          </label>
+          <label id="nutritionFilteringLabel">
+            Max Daily Carbs:
+            <input id="nutritionFilteringInput" type="text" />
+          </label>
+          <label id="nutritionFilteringLabel">
+            Max Daily Sodium:
+            <input id="nutritionFilteringInput" type="text" />
+          </label>
+          <label id="nutritionFilteringLabel">
+            Max Daily Sugar:
+            <input id="nutritionFilteringInput" type="text" />
+          </label>
+        </div>
 
         <div id="recipe-results">
           {recipes.length > 0 ? (
@@ -86,12 +110,15 @@ const FoodSearch = () => {
               <div key={recipe.id}>
                 <h3>{recipe.title}</h3>
                 <div class="container">
-                <img
-                  id="searchResultsImage"
-                  src={recipe.image}
-                  alt={recipe.title}
-                  onClick={function(){localStorage.setItem("recipe_id", recipe.id); window.location.href = "/some-recipe";}}
-                />
+                  <img
+                    id="searchResultsImage"
+                    src={recipe.image}
+                    alt={recipe.title}
+                    onClick={function () {
+                      localStorage.setItem("recipe_id", recipe.id);
+                      window.location.href = "/some-recipe";
+                    }}
+                  />
                 </div>
               </div>
             ))

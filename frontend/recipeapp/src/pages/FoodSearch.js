@@ -23,7 +23,7 @@ const FoodSearch = () => {
   const handleSubmit = (event) => {
     event.preventDefault();
     console.log("handleSubmit called");
-    fetch(global.config.api_url + "/search_recipes.php?query=" + inputText + "&use_ingredients=" + useIngredients + "&token=" + localStorage.getItem("user_token"), {
+    fetch(global.config.api_url + "/search_recipes.php?query=" + inputText + "&use_ingredients=" + useIngredients + "&selectedDiet=" + selectedDiet + "&token=" + localStorage.getItem("user_token"), {
       method: "GET",
       headers: {
         "content-type": "text/plain",

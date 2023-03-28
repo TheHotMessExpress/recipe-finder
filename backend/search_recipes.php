@@ -10,6 +10,7 @@ header("Content-type:application/json");
 $query_string = (isset($_GET['query']) ? $_GET['query'] : "");
 $token = (isset($_GET['token']) ? $_GET['token'] : "");
 $use_ingredients = (isset($_GET['use_ingredients'])? $_GET['use_ingredients'] : "");
+$selected_diet = (isset($_GET['selectedDiet'])? $_GET['selectedDiet'] : "");
 
 
 if($query_string != ""){
@@ -23,7 +24,7 @@ if($query_string != ""){
     }
     else{
     // fetch info from spoontacular
-    $recipes = getRecipes($query_string, $user_id, $IngredientList, $use_ingredients);
+    $recipes = getRecipes($query_string, $user_id, $IngredientList, $selected_diet, $use_ingredients);
 
     // stub out response for front end
     echo json_encode(array("success" => true, "data" => array($recipes)));

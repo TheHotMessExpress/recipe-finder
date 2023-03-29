@@ -34,6 +34,7 @@ const Register = () => {
           if (response['success'] === true) {
             // save token
             localStorage.setItem("user_token", response['data']['token']);
+            localStorage.setItem("login_status", "logged_in");
 
             // redirect
             alert("Thanks for registering! You pantry is ready to fill.");

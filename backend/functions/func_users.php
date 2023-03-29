@@ -56,4 +56,28 @@ function registerUser($name, $email, $password){
     return $user_id;
 }
 
+// checks if a user exists for that email and passwords match
+// returns token if the info is valid
+function loginUser($email, $password){
+    global $conn;
+
+    // fetch user
+    $sql = "SELECT `email`, `password`, `token`
+            FROM `users` AS `u`
+            JOIN `user_tokens` AS `ut` ON `ut`.`user_id` = `u`.`id`
+            WHERE `email` = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("s", $email);
+    $stmt->execute();
+    $result = $stmt->get_result()->fetch_assoc();
+
+
+    // compare passwords
+    if(isset($result['password']) && password_verify($password, $result['password'])){
+        return $result['token'];
+    }else{
+        return "";
+    }
+}
+
 ?>

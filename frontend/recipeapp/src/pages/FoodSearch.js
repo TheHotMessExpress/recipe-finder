@@ -11,6 +11,13 @@ const FoodSearch = () => {
   const [useIngredients, setUseIngredients] = useState(0);
   const [recipes, setRecipes] = useState([]);
 
+  const [selectedDiet, setSelectedDiet] = useState('');
+
+  const handleDietChange = (event) => {
+    const value = event.target.value;
+    setSelectedDiet(value);
+  };
+
   let inputHandler = (e) => {
     setInputText(e.target.value);
   };
@@ -19,7 +26,7 @@ const FoodSearch = () => {
   const handleSubmit = (event) => {
     event.preventDefault();
     console.log("handleSubmit called");
-    fetch(global.config.api_url + "/search_recipes.php?query=" + inputText + "&use_ingredients=" + useIngredients + "&token=" + localStorage.getItem("user_token"), {
+    fetch(global.config.api_url + "/search_recipes.php?query=" + inputText + "&use_ingredients=" + useIngredients + "&selectedDiet=" + selectedDiet + "&token=" + localStorage.getItem("user_token"), {
       method: "GET",
       headers: {
         "content-type": "text/plain",
@@ -82,6 +89,63 @@ const FoodSearch = () => {
             id="ingredient_checkbox"
           />
         </form>
+
+      {/* Dietary filtering */}
+
+      <div id="dietFiltering">
+      <label>
+          <input
+            type="radio"
+            name="diet"
+            value="vegan"
+            onChange={handleDietChange}
+            checked={selectedDiet === 'vegan'}
+          />
+          Vegan
+        </label>
+        <label>
+          <input
+            type="radio"
+            name="diet"
+            value="vegetarian"
+            onChange={handleDietChange}
+            checked={selectedDiet === 'vegetarian'}
+          />
+          Vegetarian
+        </label>
+        <label>
+          <input
+            type="radio"
+            name="diet"
+            value="gluten-free"
+            onChange={handleDietChange}
+            checked={selectedDiet === 'gluten-free'}
+          />
+          Gluten-Free
+        </label>
+        <label>
+          <input
+            type="radio"
+            name="diet"
+            value="keto"
+            onChange={handleDietChange}
+            checked={selectedDiet === 'keto'}
+          />
+          Keto
+        </label>
+                <label>
+          <input
+            type="radio"
+            name="diet"
+            value="dairy-free"
+            onChange={handleDietChange}
+            checked={selectedDiet === 'dairy-free'}
+          />
+          Dairy-Free
+        </label>
+
+      </div>
+
 
         <div id="recipe-results">
           {recipes.length > 0 ? (

@@ -73,7 +73,7 @@ function loginUser($email, $password){
 
 
     // compare passwords
-    if(password_verify($password, $result['password'])){
+    if(isset($result['password']) && password_verify($password, $result['password'])){
         return $result['token'];
     }else{
         return "";

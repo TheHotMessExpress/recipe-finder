@@ -6,6 +6,14 @@ const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
+  // check if we should logout first
+  if(localStorage['login_status'] == "logged_in"){
+    localStorage.setItem("user_token", "");
+    localStorage.setItem("login_status", "");
+    alert("You have been logged out.");
+    window.location.href = "/login";
+  }
+
   const handleSubmit = (event) => {
     event.preventDefault();
 
@@ -26,6 +34,7 @@ const Login = () => {
       if (response['success'] === true) {
         // save token
         localStorage.setItem("user_token", response['data']['token']);
+        localStorage.setItem("login_status", "logged_in");
 
         // redirect
         alert("You are now logged in. Your pantry is ready.");

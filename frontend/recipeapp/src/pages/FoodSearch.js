@@ -3,6 +3,9 @@ import { useState } from "react";
 import "../index.css";
 import "../config.js";
 
+//import notebook from "../images/notebook.png";
+
+
 const FoodSearch = () => {
   const [inputText, setInputText] = useState("");
   const [useIngredients, setUseIngredients] = useState(0);

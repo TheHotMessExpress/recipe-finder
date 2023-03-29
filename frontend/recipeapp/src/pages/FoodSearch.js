@@ -8,6 +8,13 @@ const FoodSearch = () => {
   const [useIngredients, setUseIngredients] = useState(0);
   const [recipes, setRecipes] = useState([]);
 
+  const [nutritionFilters, setNutritionFilters] = useState({
+    maxDailyCalories: "",
+    maxDailyCarbs: "",
+    maxDailySodium: "",
+    maxDailySugar: "",
+  })
+
   let inputHandler = (e) => {
     setInputText(e.target.value);
   };
@@ -16,6 +23,10 @@ const FoodSearch = () => {
   const handleSubmit = (event) => {
     event.preventDefault();
     console.log("handleSubmit called");
+
+    //connect nutritionFiltering to submit button ??
+    
+
     fetch(global.config.api_url + "/search_recipes.php?query=" + inputText + "&use_ingredients=" + useIngredients + "&token=" + localStorage.getItem("user_token"), {
       method: "GET",
       headers: {
@@ -49,6 +60,13 @@ const FoodSearch = () => {
       .catch((err) => {
         console.log(err);
       });
+  };
+
+  // (?)
+  const handleNutritionFiltersChange = (e) => {
+    setNutritionFilters(() => ({
+
+    }));
   };
 
   return (
@@ -86,22 +104,42 @@ const FoodSearch = () => {
 
         {/* Nutrition Filtering  */}
         <div id="nutritionFiltering">
-          <label id="nutritionFilteringLabel">
-            Max Daily Calories:
-            <input id="nutritionFilteringInput" type="text" />
-          </label>
-          <label id="nutritionFilteringLabel">
-            Max Daily Carbs:
-            <input id="nutritionFilteringInput" type="text" />
-          </label>
-          <label id="nutritionFilteringLabel">
-            Max Daily Sodium:
-            <input id="nutritionFilteringInput" type="text" />
-          </label>
-          <label id="nutritionFilteringLabel">
-            Max Daily Sugar:
-            <input id="nutritionFilteringInput" type="text" />
-          </label>
+        <label>Max Daily Calories:</label>
+            <input
+              type="number"
+              name="maxDailyCalories"
+              id="nutritionFilteringInput"
+              value={nutritionFilters.maxDailyCalories}
+              onChange={handleNutritionFiltersChange}
+              min="0"
+            />
+            <label>Max Daily Carbs:</label>
+            <input
+              type="number"
+              name="maxDailyCarbs"
+              id="nutritionFilteringInput"
+              value={nutritionFilters.maxDailyCarbs}
+              onChange={handleNutritionFiltersChange}
+              min="0"
+            />
+            <label>Max Daily Sodium:</label>
+            <input
+              type="number"
+              name="maxDailySodium"
+              id="nutritionFilteringInput"
+              value={nutritionFilters.maxDailySodium}
+              onChange={handleNutritionFiltersChange}
+              min="0"
+            />
+            <label>Max Daily Sugar:</label>
+            <input
+              type="number"
+              name="maxDailySugar"
+              id="nutritionFilteringInput"
+              value={nutritionFilters.maxDailySugar}
+              onChange={handleNutritionFiltersChange}
+              min="0"
+            />
         </div>
 
         <div id="recipe-results">

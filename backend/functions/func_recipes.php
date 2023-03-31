@@ -1,14 +1,26 @@
 <?php
-
+/** 
+ * @param string $query The search query to use for recipe search.
+ * @param int $user_id The user ID of the user making the request.
+ * @param array $IngredientList An array of ingredients to use for ingredient search (optional).
+ * @param string $selected_diet The selected diet for the recipe search (optional).
+ * @param int $use_ingredients Flag indicating whether to use the ingredient search.
+ * @return array $list An array of recipes, each containing an id, title, and image.
+*/
 // calls spoontacular API to get recipe results
-function getRecipes($query, $user_id, $IngredientList, $use_ingredients = 0){
+function getRecipes($query, $user_id, $IngredientList, $selected_diet, $use_ingredients = 0){
     // get api key
     global $spoontacular_api_key;
     if ($use_ingredients == 0 || empty($IngredientList)){
     // perform GET request to API
     $ch = curl_init();
+    if($selected_diet == "dairy-free"){
+    curl_setopt($ch, CURLOPT_URL, 'https://api.spoonacular.com/recipes/complexSearch?apiKey='.$spoontacular_api_key.'&query='.$query."&intolerances=dairy");
+    }
+    else{
+        curl_setopt($ch, CURLOPT_URL, 'https://api.spoonacular.com/recipes/complexSearch?apiKey='.$spoontacular_api_key.'&query='.$query."&diet=".$selected_diet);
 
-    curl_setopt($ch, CURLOPT_URL, 'https://api.spoonacular.com/recipes/complexSearch?apiKey='.$spoontacular_api_key.'&query='.$query);
+    }
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 
     $result = curl_exec($ch);
@@ -27,8 +39,13 @@ function getRecipes($query, $user_id, $IngredientList, $use_ingredients = 0){
         
         // perform GET request to API
         $ch = curl_init();
+        if($selected_diet == "dairy-free"){
+            curl_setopt($ch, CURLOPT_URL, 'https://api.spoonacular.com/recipes/complexSearch?apiKey='.$spoontacular_api_key.'&query='.$query.'&intolerances=dairy&includeIngredients='.$StringIngredientList);
+        }
+        else{
+            curl_setopt($ch, CURLOPT_URL, 'https://api.spoonacular.com/recipes/complexSearch?apiKey='.$spoontacular_api_key.'&query='.$query.'&diet='.$selected_diet.'&includeIngredients='.$StringIngredientList);
 
-        curl_setopt($ch, CURLOPT_URL, 'https://api.spoonacular.com/recipes/complexSearch?apiKey='.$spoontacular_api_key.'&query='.$query.'&includeIngredients='.$StringIngredientList);
+        }
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 
         $result = curl_exec($ch);

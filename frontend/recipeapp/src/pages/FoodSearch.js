@@ -37,7 +37,7 @@ const FoodSearch = () => {
     //connect nutritionFiltering to submit button ??
     
 
-    fetch(global.config.api_url + "/search_recipes.php?query=" + inputText + "&use_ingredients=" + useIngredients + "&selectedDiet=" + selectedDiet + "&token=" + localStorage.getItem("user_token"), {
+    fetch(global.config.api_url + "/search_recipes.php?query=" + inputText + "&use_ingredients=" + useIngredients + "&maxCarbs=" + nutritionFilters.maxDailyCarbs + "&maxCalories=" + nutritionFilters.maxDailyCalories + "&maxSodium=" + nutritionFilters.maxDailySodium + "&maxSugar=" + nutritionFilters.maxDailySugar + "&selectedDiet=" + selectedDiet + "&token=" + localStorage.getItem("user_token"), {
       method: "GET",
       headers: {
         "content-type": "text/plain",
@@ -72,10 +72,12 @@ const FoodSearch = () => {
       });
   };
 
-  // (?)
-  const handleNutritionFiltersChange = (e) => {
-    setNutritionFilters(() => ({
 
+  const handleNutritionFiltersChange = (e) => {
+    const { name, value } = e.target;
+    setNutritionFilters((prevFilters) => ({
+      ...prevFilters,
+      [name]: value,
     }));
   };
 

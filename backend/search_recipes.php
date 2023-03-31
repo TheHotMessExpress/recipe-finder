@@ -7,13 +7,16 @@ require("./functions/func_ingredients.php");
 header("Content-type:application/json");
 try {
   // get parameters
-  $query_string = $_GET['query'] ?? "";
+  $queryString = $_GET['query'] ?? "";
   $token = $_GET['token'] ?? "";
-  $use_ingredients = $_GET['use_ingredients'] ?? "";
-  $selected_diet = $_GET['selectedDiet'] ?? "";
-
+  $useIngredients = $_GET['use_ingredients'] ?? "";
+  $selectedDiet = $_GET['selectedDiet'] ?? null;
+  $maxCalories = $_GET['maxCalories'] ?? null;
+  $maxCarbs = $_GET['maxCarbs'] ?? null;
+  $maxSodium = $_GET['maxSodium'] ?? null;
+  $maxSugar = $_GET['maxSugar'] ?? null; 
   // Validate parameters
-  if ($query_string === "") {
+  if ($queryString === "") {
     throw new Exception("Invalid (empty) query string", 400);
   }
   if ($token === "") {
@@ -21,15 +24,15 @@ try {
   }
 
   // get user id
-  $user_id = getUserIdByToken($token);
+  $userId = getUserIdByToken($token);
   // get user ingredients
-  $IngredientList = getUserIngredients($user_id);
-  if ($use_ingredients == 1 && empty($IngredientList)){
+  $IngredientList = getUserIngredients($userId);
+  if ($useIngredients == 1 && empty($IngredientList)){
     throw new Exception("Empty user pantry", 400);
   }
     
   // fetch info from spoontacular
-  $recipes = getRecipes($query_string, $user_id, $IngredientList, $selected_diet, $use_ingredients);
+  $recipes = getRecipes($queryString, $userId, $IngredientList, $maxCalories, $maxCarbs, $maxSodium, $maxSugar, $selectedDiet, $useIngredients);
 
   // stub out response for front end
   echo json_encode(array("success" => true, "data" => array($recipes)));
@@ -39,5 +42,5 @@ catch (Exception $e) {
     http_response_code($e->getCode());
     echo json_encode(array("success" => false, "error" => array("message" => $e->getMessage())));
   }
-
+  
 ?>

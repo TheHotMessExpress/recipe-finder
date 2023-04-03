@@ -10,7 +10,7 @@ const Pantry = () => {
       </h1>
       <input type={'text'} id="ingredients_query" placeholder="Filter ingredients..."
         onInput={filterIngredients}></input>
-      <div id="categories_container"> </div>
+          <div id="categories_container" > </div>
       <button id="save_ingredients" style={{display: 'none'}} onClick={saveIngredients}>Save</button>
     </div>
   );
@@ -46,13 +46,20 @@ function loadIngredients(){
 // displays ingredients to html
 function displayIngredients(data){
   // clear container
-  document.getElementById("categories_container").innerHTML = "";
+    document.getElementById("categories_container").innerHTML = "";
+
 
   // create categories
   for(let i = 0; i < data['categories'].length; i++){
     document.getElementById("categories_container").innerHTML += 
       '<div class="category"><h3>'+data['categories'][i]['name']+'</h3><div id="'+
-      data['categories'][i]['id']+'_container"></div></div>';
+          data['categories'][i]['id'] + '_container"></div></div>';
+
+      //format Dairy1_container, Meat2_container
+
+
+
+      
   }
 
   // fill with ingredients
@@ -60,9 +67,12 @@ function displayIngredients(data){
     document.getElementById(data['ingredients'][i]['category_id']+"_container").innerHTML += 
       '<div class="ingredient"><input type="checkbox" id="ingredient_'+data['ingredients'][i]['id']+'" '+
       (data['ingredients'][i]['checked'] == 1 ? 'checked' : '') + '></input>'+
-      '<label>'+data['ingredients'][i]['name']+'</label></div>';
+          '<label>' + data['ingredients'][i]['name'] + '</label></div>';
+
+      
   }
 }
+console.log(document.getElementById("categories_container"));
 
 // saves the ingredients to the backend for the user, then redirects
 function saveIngredients(){

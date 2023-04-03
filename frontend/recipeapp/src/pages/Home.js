@@ -16,12 +16,15 @@ const Home = () => {
     <h1 id="title_element">Recipe Finder</h1>
   </div>
       <p id="siteDescription">Recipe Finder can help you find a new favorite recipe or figure out
-      what to make for dinner with the ingredients in your own pantry!
-      </p>
+              what to make for dinner with the ingredients in your own pantry!
+              <br></br><br></br><br></br><br></br>
+          </p>
+          <p id="title2">
+              Meet The Developers
+          </p>
 
 
     <div id="collapse">
-      <Collapsible trigger="*** Meet The Developers ***">
         <div id="float-container">
         <div id="developerCard"><h1 id="developerName">Andrew</h1>
         <img id="developerPicture" src={andrew}></img>
@@ -40,7 +43,7 @@ const Home = () => {
         <p id="developerDiscription">I have 2 more classes at emu. My Major is computer science. I plan to help on the front end with this project </p>
         </div>
         </div>
-      </Collapsible>
+      
       </div>
 
       

@@ -4,18 +4,23 @@ import "../index.css";
 import "../config.js";
 
 //import notebook from "../images/notebook.png";
-
-
 const FoodSearch = () => {
   const [inputText, setInputText] = useState("");
   const [useIngredients, setUseIngredients] = useState(0);
   const [recipes, setRecipes] = useState([]);
 
-  const [selectedDiet, setSelectedDiet] = useState('');
+  const [selectedDiet, setSelectedDiet] = useState([]);
 
   const handleDietChange = (event) => {
     const value = event.target.value;
-    setSelectedDiet(value);
+    const isChecked = event.target.checked;
+
+    // If the checkbox is checked, add the value to the array.
+    if (isChecked) {
+      setSelectedDiet([...selectedDiet, value]);
+    } else {
+      setSelectedDiet(selectedDiet.filter((diet) => diet !== value));
+    }
   };
 
   let inputHandler = (e) => {
@@ -25,14 +30,26 @@ const FoodSearch = () => {
   // call API to get recipes
   const handleSubmit = (event) => {
     event.preventDefault();
+    const selectedDietsString = selectedDiet.join(",");
     console.log("handleSubmit called");
-    fetch(global.config.api_url + "/search_recipes.php?query=" + inputText + "&use_ingredients=" + useIngredients + "&selectedDiet=" + selectedDiet + "&token=" + localStorage.getItem("user_token"), {
-      method: "GET",
-      headers: {
-        "content-type": "text/plain",
-        accept: "application/json",
-      },
-    })
+    fetch(
+      global.config.api_url +
+        "/search_recipes.php?query=" +
+        inputText +
+        "&use_ingredients=" +
+        useIngredients +
+        "&selectedDiet=" +
+        selectedDietsString +
+        "&token=" +
+        localStorage.getItem("user_token"),
+      {
+        method: "GET",
+        headers: {
+          "content-type": "text/plain",
+          accept: "application/json",
+        },
+      }
+    )
       .then((response) => response.json())
       .then((response) => {
         console.log(response);
@@ -51,8 +68,10 @@ const FoodSearch = () => {
           setRecipes([]);
 
           // see why it failed
-          if(response['error']['message'] == "Empty User Pantry"){
-            alert("You have no items in your pantry so you can't filter by ingredients.");
+          if (response["error"]["message"] == "Empty User Pantry") {
+            alert(
+              "You have no items in your pantry so you can't filter by ingredients."
+            );
           }
         }
       })
@@ -73,79 +92,80 @@ const FoodSearch = () => {
             onChange={inputHandler}
             placeholder="Search"
           />
-          <button disabled={!inputText} id="foodSearchButton" className="foodSearchButton">
+          <button
+            disabled={!inputText}
+            id="foodSearchButton"
+            className="foodSearchButton">
             Search
           </button>
-          <br/>
-          <label for="ingredient_checkbox">Prioritize on-hand ingredients (in pantry)</label>
+          <br />
+          <label for="ingredient_checkbox">
+            Prioritize on-hand ingredients (in pantry)
+          </label>
           <input
             type="checkbox"
             checked={useIngredients}
-            onChange={function(e) {
-              e.target.checked
-                ? setUseIngredients(1)
-                : setUseIngredients(0);
+            onChange={function (e) {
+              e.target.checked ? setUseIngredients(1) : setUseIngredients(0);
             }}
             id="ingredient_checkbox"
           />
         </form>
 
-      {/* Dietary filtering */}
+        {/* Dietary filtering */}
 
-      <div id="dietFiltering">
-      <label>
-          <input
-            type="radio"
-            name="diet"
-            value="vegan"
-            onChange={handleDietChange}
-            checked={selectedDiet === 'vegan'}
-          />
-          Vegan
-        </label>
-        <label>
-          <input
-            type="radio"
-            name="diet"
-            value="vegetarian"
-            onChange={handleDietChange}
-            checked={selectedDiet === 'vegetarian'}
-          />
-          Vegetarian
-        </label>
-        <label>
-          <input
-            type="radio"
-            name="diet"
-            value="gluten-free"
-            onChange={handleDietChange}
-            checked={selectedDiet === 'gluten-free'}
-          />
-          Gluten-Free
-        </label>
-        <label>
-          <input
-            type="radio"
-            name="diet"
-            value="keto"
-            onChange={handleDietChange}
-            checked={selectedDiet === 'keto'}
-          />
-          Keto
-        </label>
-                <label>
-          <input
-            type="radio"
-            name="diet"
-            value="dairy-free"
-            onChange={handleDietChange}
-            checked={selectedDiet === 'dairy-free'}
-          />
-          Dairy-Free
-        </label>
-
-      </div>
-
+        <div id="dietFiltering">
+          <label>
+            <input
+              type="checkbox"
+              name="diet"
+              value="vegan"
+              onChange={handleDietChange}
+              checked={selectedDiet.includes("vegan")}
+            />
+            Vegan
+          </label>
+          <label>
+            <input
+              type="checkbox"
+              name="diet"
+              value="vegetarian"
+              onChange={handleDietChange}
+              checked={selectedDiet.includes("vegetarian")}
+            />
+            Vegetarian
+          </label>
+          <label>
+            <input
+              type="checkbox"
+              name="diet"
+              value="gluten-free"
+              onChange={handleDietChange}
+              checked={selectedDiet.includes("gluten-free")}
+            />
+            Gluten-Free
+          </label>
+          <label>
+            <input
+              type="checkbox"
+              name="diet"
+              value="keto"
+              onChange={handleDietChange}
+              checked={selectedDiet.includes("keto")}
+            />
+            Keto
+          </label>
+          <label>
+            <input
+              type="checkbox"
+              name="diet"
+              value="dairy-free"
+              onChange={handleDietChange}
+              checked={selectedDiet.includes("dairy-free")}
+            />
+            Dairy-Free
+          </label>
+        </div>
 
         <div id="recipe-results">
           {recipes.length > 0 ? (
@@ -153,12 +173,15 @@ const FoodSearch = () => {
               <div key={recipe.id}>
                 <h3>{recipe.title}</h3>
                 <div class="container">
-                <img
-                  id="searchResultsImage"
-                  src={recipe.image}
-                  alt={recipe.title}
-                  onClick={function(){localStorage.setItem("recipe_id", recipe.id); window.location.href = "/some-recipe";}}
-                />
+                  <img
+                    id="searchResultsImage"
+                    src={recipe.image}
+                    alt={recipe.title}
+                    onClick={function () {
+                      localStorage.setItem("recipe_id", recipe.id);
+                      window.location.href = "/some-recipe";
+                    }}
+                  />
                 </div>
               </div>
             ))

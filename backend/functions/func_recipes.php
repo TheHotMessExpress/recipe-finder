@@ -32,7 +32,6 @@ function getRecipes($query, $user_id, $IngredientList, $selected_diets = array()
             $query_params['intolerances'] = implode(',', $intolerances);
         }
         $url = 'https://api.spoonacular.com/recipes/complexSearch?apiKey=' . $spoontacular_api_key . '&' . http_build_query($query_params);
-        echo $url;
     curl_setopt($ch, CURLOPT_URL, $url);
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 

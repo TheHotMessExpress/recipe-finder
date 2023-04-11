@@ -65,6 +65,9 @@ const FoodSearch = () => {
           if(response['error']['message'] === "Empty User Pantry"){
             alert("You have no items in your pantry so you can't filter by ingredients.");
           }
+          if(response['error']['message'] === "No recipes with selected filters"){
+            alert("No recipes found with selected filters");
+          }
         }
       })
       .catch((err) => {

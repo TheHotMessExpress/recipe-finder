@@ -10,7 +10,8 @@ try {
   $query_string = $_GET['query'] ?? "";
   $token = $_GET['token'] ?? "";
   $use_ingredients = $_GET['use_ingredients'] ?? "";
-  $selected_diet = $_GET['selectedDiet'] ?? "";
+  $selected_diets = $_GET['selectedDiet'] ?? array();
+  $selected_diets_array = explode(',', $selected_diets);
 
   // Validate parameters
   if ($query_string === "") {
@@ -29,7 +30,7 @@ try {
   }
     
   // fetch info from spoontacular
-  $recipes = getRecipes($query_string, $user_id, $IngredientList, $selected_diet, $use_ingredients);
+  $recipes = getRecipes($query_string, $user_id, $IngredientList, $selected_diets_array, $use_ingredients);
 
   // stub out response for front end
   echo json_encode(array("success" => true, "data" => array($recipes)));

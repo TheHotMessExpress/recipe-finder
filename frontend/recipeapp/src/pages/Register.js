@@ -4,8 +4,8 @@ import { Outlet, Link } from "react-router-dom";
 const Register = () => {
   return (
     <div>
-      <h1>
-      This is "Register" Page
+      <h1 id="loginTitle">
+        Register
       </h1>
           <div id="regbox">
             <p id="register">

@@ -44,10 +44,10 @@ const SomeRecipe = () => {
    
         return (
         <div>
-      <h1>
-        {title}
+      <h1 id="recTitle">
+        {title }
       </h1>
-          <body>
+          <p1>
                     <img id="someRecipeImage" src={image} />
                         <ul id="someRecipeList">
                         <a id="someRecipeLink" href={source} target="_blank">Recipe Link</a>
@@ -55,7 +55,7 @@ const SomeRecipe = () => {
                 <li key={index}>{ingredient["name"]} {ingredient["amountValue"]} {ingredient["amountUnit"]}</li>
               ))} 
                         </ul>
-          </body>
+          </p1>
     </div>
   );
 };

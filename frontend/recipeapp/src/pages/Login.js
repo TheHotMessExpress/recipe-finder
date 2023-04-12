@@ -3,19 +3,18 @@ import React from "react";
 const Login = () => {
   return (
     <div>
-      <h1>
-      This is the "Login" Page
+      <h1 id="loginTitle">
+      login Page
       </h1>
     <p id="login">
               Username:
-              <input class="username" type="text"></input>
-              <br></br><br></br>
+              <input id="entry" class="form-control input-sm" type="text"></input>
+              <br></br>
             Password:
-              <input class="password" type="text"></input>
+              <input id="entry" class="form-control input-sm" type="text"></input>
               <br></br><br></br>
-              <button type="button">Log In</button>
-              &nbsp;&nbsp;&nbsp;&nbsp;
-              <button type="button">Forgot password</button>
+              <button id="buttons" type="button">Log In</button>
+              <button id="buttons"  type="button">Forgot password</button>
     </p>
     </div>
   );

@@ -6,24 +6,27 @@ import andrew from "../images/andrew.png";
 import jesse from "../images/jesse.jpg";
 import miranda from "../images/miranda.jpg";
 import Camden from "../images/Camden.jpg";
+
 import "../index.css";
+
+
   
 const Home = () => {
 
   return (
+
     <div> 
   <div>
     <h1 id="title_element">Recipe Finder</h1>
   </div>
       <p id="siteDescription">Recipe Finder can help you find a new favorite recipe or figure out
               what to make for dinner with the ingredients in your own pantry!
-              <br></br><br></br><br></br><br></br>
           </p>
-          <p id="title2">
+          <p id="title2" class=".pe-3">
               Meet The Developers
           </p>
 
-
+    
     <div id="collapse">
         <div id="float-container">
         <div id="developerCard"><h1 id="developerName">Andrew</h1>

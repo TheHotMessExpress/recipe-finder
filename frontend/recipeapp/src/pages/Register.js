@@ -10,15 +10,15 @@ const Register = () => {
           <div id="regbox">
             <p id="register">
               Username:
-              <input class="username" type="text"></input>
-              <br></br><br></br>
+              <input id="entry" class="form-control input-sm" type="text"></input>
               Password:
-            <input class="password" type="text"></input>
-            <br></br><br></br>
+             <input id="entry" class="form-control input-sm" type="text"></input>
+
             Confirm Password:
-            <input class="Confirmpassword" type="text"></input>
+                  <input id="entry" class="form-control input-sm" type="text"></input>
+
               </p>
-              <br></br><br></br><br></br><br></br>
+         
               <button type="button" id="regButton">Register</button>
 
           </div>

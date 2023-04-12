@@ -11,6 +11,13 @@ const FoodSearch = () => {
   const [useIngredients, setUseIngredients] = useState(0);
   const [recipes, setRecipes] = useState([]);
 
+  const [nutritionFilters, setNutritionFilters] = useState({
+    maxDailyCalories: "",
+    maxDailyCarbs: "",
+    maxDailySodium: "",
+    maxDailySugar: "",
+  })
+
   const [selectedDiet, setSelectedDiet] = useState('');
 
   const handleDietChange = (event) => {
@@ -26,7 +33,11 @@ const FoodSearch = () => {
   const handleSubmit = (event) => {
     event.preventDefault();
     console.log("handleSubmit called");
-    fetch(global.config.api_url + "/search_recipes.php?query=" + inputText + "&use_ingredients=" + useIngredients + "&selectedDiet=" + selectedDiet + "&token=" + localStorage.getItem("user_token"), {
+
+    //connect nutritionFiltering to submit button ??
+    
+
+    fetch(global.config.api_url + "/search_recipes.php?query=" + inputText + "&use_ingredients=" + useIngredients + "&maxCarbs=" + nutritionFilters.maxDailyCarbs + "&maxCalories=" + nutritionFilters.maxDailyCalories + "&maxSodium=" + nutritionFilters.maxDailySodium + "&maxSugar=" + nutritionFilters.maxDailySugar + "&selectedDiet=" + selectedDiet + "&token=" + localStorage.getItem("user_token"), {
       method: "GET",
       headers: {
         "content-type": "text/plain",
@@ -51,14 +62,26 @@ const FoodSearch = () => {
           setRecipes([]);
 
           // see why it failed
-          if(response['error']['message'] == "Empty User Pantry"){
+          if(response['error']['message'] === "Empty User Pantry"){
             alert("You have no items in your pantry so you can't filter by ingredients.");
+          }
+          if(response['error']['message'] === "No recipes with selected filters"){
+            alert("No recipes found with selected filters");
           }
         }
       })
       .catch((err) => {
         console.log(err);
       });
+  };
+
+
+  const handleNutritionFiltersChange = (e) => {
+    const { name, value } = e.target;
+    setNutritionFilters((prevFilters) => ({
+      ...prevFilters,
+      [name]: value,
+    }));
   };
 
   return (
@@ -73,18 +96,21 @@ const FoodSearch = () => {
             onChange={inputHandler}
             placeholder="Search"
           />
-          <button disabled={!inputText} id="foodSearchButton" className="foodSearchButton">
+          <button
+            disabled={!inputText}
+            id="foodSearchButton"
+            className="foodSearchButton">
             Search
           </button>
-          <br/>
-          <label for="ingredient_checkbox">Prioritize on-hand ingredients (in pantry)</label>
+          <br />
+          <label for="ingredient_checkbox">
+            Prioritize on-hand ingredients (in pantry)
+          </label>
           <input
             type="checkbox"
             checked={useIngredients}
-            onChange={function(e) {
-              e.target.checked
-                ? setUseIngredients(1)
-                : setUseIngredients(0);
+            onChange={function (e) {
+              e.target.checked ? setUseIngredients(1) : setUseIngredients(0);
             }}
             id="ingredient_checkbox"
           />
@@ -146,6 +172,45 @@ const FoodSearch = () => {
 
       </div>
 
+        {/* Nutrition Filtering  */}
+        <div id="nutritionFiltering">
+        <label>Max Daily Calories:</label>
+            <input
+              type="number"
+              name="maxDailyCalories"
+              id="nutritionFilteringInput"
+              value={nutritionFilters.maxDailyCalories}
+              onChange={handleNutritionFiltersChange}
+              min="0"
+            />
+            <label>Max Daily Carbs:</label>
+            <input
+              type="number"
+              name="maxDailyCarbs"
+              id="nutritionFilteringInput"
+              value={nutritionFilters.maxDailyCarbs}
+              onChange={handleNutritionFiltersChange}
+              min="0"
+            />
+            <label>Max Daily Sodium:</label>
+            <input
+              type="number"
+              name="maxDailySodium"
+              id="nutritionFilteringInput"
+              value={nutritionFilters.maxDailySodium}
+              onChange={handleNutritionFiltersChange}
+              min="0"
+            />
+            <label>Max Daily Sugar:</label>
+            <input
+              type="number"
+              name="maxDailySugar"
+              id="nutritionFilteringInput"
+              value={nutritionFilters.maxDailySugar}
+              onChange={handleNutritionFiltersChange}
+              min="0"
+            />
+        </div>
 
         <div id="recipe-results">
           {recipes.length > 0 ? (
@@ -153,12 +218,15 @@ const FoodSearch = () => {
               <div key={recipe.id}>
                 <h3>{recipe.title}</h3>
                 <div class="container">
-                <img
-                  id="searchResultsImage"
-                  src={recipe.image}
-                  alt={recipe.title}
-                  onClick={function(){localStorage.setItem("recipe_id", recipe.id); window.location.href = "/some-recipe";}}
-                />
+                  <img
+                    id="searchResultsImage"
+                    src={recipe.image}
+                    alt={recipe.title}
+                    onClick={function () {
+                      localStorage.setItem("recipe_id", recipe.id);
+                      window.location.href = "/some-recipe";
+                    }}
+                  />
                 </div>
               </div>
             ))

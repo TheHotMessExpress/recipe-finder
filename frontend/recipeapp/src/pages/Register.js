@@ -59,15 +59,15 @@ const Register = () => {
 
   return (
     <div>
-      <h1 id="loginTitle">
-        Register
+      <h1>
+      This is "Register" Page
       </h1>
         <form  onSubmit={handleSubmit}>
           <div id="regbox">
             <div id="register">
               <div>
                 Name:
-                <input class="form-control input-sm" 
+                <input id="entry" class="form-control input-sm" 
                   type="text"
                   value={name}
                   onChange={(e) => setName(e.target.value)}
@@ -77,7 +77,7 @@ const Register = () => {
 
               <div>
                 Email:
-                <input class="form-control input-sm" 
+                <input id="entry" class="form-control input-sm" 
                   type="text"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
@@ -87,7 +87,7 @@ const Register = () => {
 
               <div>
                 Password:
-                <input className="password" 
+                <input id="entry" class="form-control input-sm"  
                   type="password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
@@ -98,7 +98,7 @@ const Register = () => {
 
               <div>
                   Confirm Password:
-                  <input className="Conpassword" 
+                  <input id="entry" class="form-control input-sm"  
                     type="password"
                     value={password2}
                     onChange={(e) => setPassword2(e.target.value)}

@@ -60,7 +60,7 @@ const Login = () => {
         <form onSubmit={handleSubmit}>
           <p id="login">
                 Username:
-                <input class="form-control input-sm"
+                <input id="entry" class="form-control input-sm"
                   type="text"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
@@ -68,7 +68,7 @@ const Login = () => {
                 ></input>
                 <br></br><br></br>
                 Password:
-                <input class="form-control input-sm"
+                <input id="entry" class="form-control input-sm"
                   type="password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}

@@ -21,8 +21,18 @@ try {
   if ($queryString === "") {
     throw new Exception("Invalid (empty) query string", 400);
   }
-  if ($token === "") {
-    throw new Exception("Invalid (empty) user token", 400);
+  // Skip token validation if pantry filtering is not requested
+  if ($useIngredients == 1) {
+    if ($token === "") {
+      throw new Exception("Empty User Pantry", 400);
+    }
+    $userId = getUserIdByToken($token);
+    $IngredientList = getUserIngredients($userId);
+    if (empty($IngredientList)){
+      throw new Exception("Empty User Pantry", 400);
+    }
+  } else {
+    $IngredientList = array();
   }
   if ($maxCalories != null){
     $params['maxCalories'] = $maxCalories;
@@ -40,16 +50,8 @@ try {
     $params['maxSugar'] = $maxSugar;
     $nutrition = true;
   }
-
-  // get user id
-  $userId = getUserIdByToken($token);
-  // get user ingredients
-  $IngredientList = getUserIngredients($userId);
-  if ($useIngredients == 1 && empty($IngredientList)){
-    throw new Exception("Empty user pantry", 400);
-  }
     // fetch info from spoontacular
-    $recipes = getRecipes($queryString, $userId, $IngredientList, $useIngredients, $selectedDiet, $params, $nutrition);
+    $recipes = getRecipes($queryString, $IngredientList, $useIngredients, $selectedDiet, $params, $nutrition);
     if ($maxCalories != null && $maxSodium != null){
       foreach($recipes as $recipe){
         $nutrition = $recipe['nutrition'];

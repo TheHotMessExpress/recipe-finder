@@ -1,7 +1,6 @@
 <?php
 /** 
  * @param string $query The search query to use for recipe search.
- * @param int $userId The user ID of the user making the request.
  * @param array $IngredientList An array of ingredients to use for ingredient search (optional).
  * @param int $useIngredients Flag indicating whether to use the ingredient search.
  * @param string $selectedDiet The selected diet for the recipe search (optional).
@@ -12,7 +11,7 @@
  * @return array $list An array of recipes, each containing an id, title, and image.
 */
 // calls spoontacular API to get recipe results
-function getRecipes($query, $userId, $IngredientList, $useIngredients, $selectedDiet, $params, $nutrition){
+function getRecipes($query, $IngredientList, $useIngredients, $selectedDiet, $params, $nutrition){
     $result;
     // get api key
     global $spoontacular_api_key;

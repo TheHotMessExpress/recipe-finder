@@ -102,6 +102,11 @@ img:hover#searchResultsImage{
     width: 50%;
   }
 
+  div#dietFiltering{
+    text-align: center;
+    padding-bottom: 10px;
+  }
+
 /* Some-Recipe */
  img#someRecipeImage{
     height: auto;

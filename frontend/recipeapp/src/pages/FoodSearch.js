@@ -9,6 +9,15 @@ const FoodSearch = () => {
   const [useIngredients, setUseIngredients] = useState(0);
   const [recipes, setRecipes] = useState([]);
 
+  const [nutritionFilters, setNutritionFilters] = useState({
+    maxDailyCalories: "",
+    maxDailyCarbs: "",
+    maxDailySodium: "",
+    maxDailySugar: "",
+  })
+
+  
+
   const [selectedDiet, setSelectedDiet] = useState([]);
 
   const handleDietChange = (event) => {
@@ -32,24 +41,17 @@ const FoodSearch = () => {
     event.preventDefault();
     const selectedDietsString = selectedDiet.join(",");
     console.log("handleSubmit called");
-    fetch(
-      global.config.api_url +
-        "/search_recipes.php?query=" +
-        inputText +
-        "&use_ingredients=" +
-        useIngredients +
-        "&selectedDiet=" +
-        selectedDietsString +
-        "&token=" +
-        localStorage.getItem("user_token"),
-      {
-        method: "GET",
-        headers: {
-          "content-type": "text/plain",
-          accept: "application/json",
-        },
-      }
-    )
+
+    //connect nutritionFiltering to submit button ??
+    
+
+    fetch(global.config.api_url + "/search_recipes.php?query=" + inputText + "&use_ingredients=" + useIngredients + "&maxCarbs=" + nutritionFilters.maxDailyCarbs + "&maxCalories=" + nutritionFilters.maxDailyCalories + "&maxSodium=" + nutritionFilters.maxDailySodium + "&maxSugar=" + nutritionFilters.maxDailySugar + "&selectedDiet=" + selectedDietsString + "&token=" + localStorage.getItem("user_token"), {
+      method: "GET",
+      headers: {
+        "content-type": "text/plain",
+        accept: "application/json",
+      },
+    })
       .then((response) => response.json())
       .then((response) => {
         console.log(response);
@@ -68,16 +70,28 @@ const FoodSearch = () => {
           setRecipes([]);
 
           // see why it failed
-          if (response["error"]["message"] == "Empty User Pantry") {
+          if (response["error"]["message"] === "Empty User Pantry") {
             alert(
               "You have no items in your pantry so you can't filter by ingredients."
             );
+          }
+          if(response['error']['message'] === "No recipes with selected filters"){
+            alert("No recipes found with selected filters");
           }
         }
       })
       .catch((err) => {
         console.log(err);
       });
+  };
+
+
+  const handleNutritionFiltersChange = (e) => {
+    const { name, value } = e.target;
+    setNutritionFilters((prevFilters) => ({
+      ...prevFilters,
+      [name]: value,
+    }));
   };
 
   return (
@@ -165,6 +179,46 @@ const FoodSearch = () => {
             />
             Dairy-Free
           </label>
+        </div>
+
+        {/* Nutrition Filtering  */}
+        <div id="nutritionFiltering">
+        <label>Max Daily Calories:</label>
+            <input
+              type="number"
+              name="maxDailyCalories"
+              id="nutritionFilteringInput"
+              value={nutritionFilters.maxDailyCalories}
+              onChange={handleNutritionFiltersChange}
+              min="0"
+            />
+            <label>Max Daily Carbs:</label>
+            <input
+              type="number"
+              name="maxDailyCarbs"
+              id="nutritionFilteringInput"
+              value={nutritionFilters.maxDailyCarbs}
+              onChange={handleNutritionFiltersChange}
+              min="0"
+            />
+            <label>Max Daily Sodium:</label>
+            <input
+              type="number"
+              name="maxDailySodium"
+              id="nutritionFilteringInput"
+              value={nutritionFilters.maxDailySodium}
+              onChange={handleNutritionFiltersChange}
+              min="0"
+            />
+            <label>Max Daily Sugar:</label>
+            <input
+              type="number"
+              name="maxDailySugar"
+              id="nutritionFilteringInput"
+              value={nutritionFilters.maxDailySugar}
+              onChange={handleNutritionFiltersChange}
+              min="0"
+            />
         </div>
 
         <div id="recipe-results">

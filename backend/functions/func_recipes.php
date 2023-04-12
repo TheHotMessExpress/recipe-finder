@@ -1,14 +1,17 @@
 <?php
 /** 
  * @param string $query The search query to use for recipe search.
- * @param int $user_id The user ID of the user making the request.
  * @param array $IngredientList An array of ingredients to use for ingredient search (optional).
- * @param string $selected_diet The selected diet for the recipe search (optional).
- * @param int $use_ingredients Flag indicating whether to use the ingredient search.
+ * @param int $useIngredients Flag indicating whether to use the ingredient search.
+ * @param string $selectedDiet The selected diet for the recipe search (optional).
+ * @param int $maxCalories Value of max Calories.
+ * @param int $maxCarbs Value of max Carbs.
+ * @param int $maxSodium Value of max Sodium.
+ * @param int $maxSugar Value of max Sugar.
  * @return array $list An array of recipes, each containing an id, title, and image.
 */
 // calls spoontacular API to get recipe results
-function getRecipes($query, $user_id, $IngredientList, $selected_diets = array(), $use_ingredients = 0){
+function getRecipes($query, $IngredientList, $use_ingredients, $params, $nutrition, $selected_diets = array()){
     // get api key
     global $spoontacular_api_key;
     $query_params = array();
@@ -31,22 +34,26 @@ function getRecipes($query, $user_id, $IngredientList, $selected_diets = array()
         if (!empty($intolerances)) {
             $query_params['intolerances'] = implode(',', $intolerances);
         }
-        $url = 'https://api.spoonacular.com/recipes/complexSearch?apiKey=' . $spoontacular_api_key . '&' . http_build_query($query_params);
+        // merge the query parameters array with the $params array passed to the function
+        $params = array_merge($query_params, $params);
+        $url = 'https://api.spoonacular.com/recipes/complexSearch?apiKey=' . $spoontacular_api_key . '&' . http_build_query($params);
     curl_setopt($ch, CURLOPT_URL, $url);
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 
-    $result = curl_exec($ch);
-    if (curl_errno($ch)) {
-        echo 'Error:' . curl_error($ch);
+        $result = curl_exec($ch);
+        if (curl_errno($ch)) {
+            echo 'Error:' . curl_error($ch);
+        }
+        curl_close($ch);
     }
-    curl_close($ch);
-    }
-    else{
+    else {
             //iterate through ingredient list to get ingredient names
             foreach($IngredientList as $ingredient){
                 $ingredientNames[] = $ingredient['name'];
             }
             $StringIngredientList = implode(', ',$ingredientNames);
+            $params[] = 'includeIngredients=' . urlencode($StringIngredientList);
+            $url = 'https://api.spoonacular.com/recipes/complexSearch?apiKey='.$spoontacular_api_key.'&' . http_build_query($params);
             
         
         // perform GET request to API
@@ -64,24 +71,33 @@ function getRecipes($query, $user_id, $IngredientList, $selected_diets = array()
         if (!empty($intolerances)) {
             $query_params['intolerances'] = implode(',', $intolerances);
         }
-        $url = 'https://api.spoonacular.com/recipes/complexSearch?apiKey=' . $spoontacular_api_key . '&' . http_build_query($query_params) . '&includeIngredients='.$StringIngredientList ;
+        // merge the query parameters array with the $params array passed to the function
+        $params = array_merge($query_params, $params);
+        $url = 'https://api.spoonacular.com/recipes/complexSearch?apiKey=' . $spoontacular_api_key . '&' . http_build_query($params) . '&includeIngredients='.$StringIngredientList ;
         curl_setopt($ch, CURLOPT_URL, $url);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 
-        $result = curl_exec($ch);
-        if (curl_errno($ch)) {
-            echo 'Error:' . curl_error($ch);
-        }
-        curl_close($ch);   
-}
+            $result = curl_exec($ch);
+            if (curl_errno($ch)) {
+                echo 'Error:' . curl_error($ch);
+            }
+            curl_close($ch);   
+    }
     // format data
     $response = json_decode($result, true);
     $list = array();
-
-    foreach($response['results'] as $recipe){
-        $list[] = array("id" => $recipe['id'], "title" => $recipe['title'], "image" => $recipe['image']);
+    if($nutrition == false){
+        foreach($response['results'] as $recipe){
+            $list[] = array("id" => $recipe['id'], "title" => $recipe['title'], "image" => $recipe['image']);
+        }
     }
-
+    if($nutrition == true){
+        if (isset($params['maxCalories']) || isset($params['maxCarbs']) || isset($params['maxSugar']) || isset($params['maxSodium'])) {
+            foreach($response['results'] as $recipe){
+                $list[] = array("id" => $recipe['id'], "title" => $recipe['title'], "image" => $recipe['image'], "nutrition" => $recipe['nutrition']['nutrients']);
+            }
+        }
+    } 
     // return list of recipes
     return $list;
 }

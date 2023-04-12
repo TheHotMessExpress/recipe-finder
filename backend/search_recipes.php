@@ -9,7 +9,9 @@ try {
   // get parameters
   $queryString = $_GET['query'] ?? "";
   $token = $_GET['token'] ?? "";
-  $useIngredients = $_GET['use_ingredients'] ?? "";
+  $use_ingredients = $_GET['use_ingredients'];
+  $selected_diets = $_GET['selectedDiet'] ?? "";
+  $selected_diets_array = explode(',', $selected_diets);
   $selectedDiet = $_GET['selectedDiet'] ?? null;
   $maxCalories = $_GET['maxCalories'] ?? null;
   $maxCarbs = $_GET['maxCarbs'] ?? null;
@@ -22,7 +24,7 @@ try {
     throw new Exception("Invalid (empty) query string", 400);
   }
   // Skip token validation if pantry filtering is not requested
-  if ($useIngredients == 1) {
+  if ($use_ingredients == 1) {
     if ($token === "") {
       throw new Exception("Empty User Pantry", 400);
     }
@@ -51,7 +53,7 @@ try {
     $nutrition = true;
   }
     // fetch info from spoontacular
-    $recipes = getRecipes($queryString, $IngredientList, $useIngredients, $selectedDiet, $params, $nutrition);
+    $recipes = getRecipes($queryString, $IngredientList, $use_ingredients, $params, $nutrition, $selected_diets_array);
     if ($maxCalories != null && $maxSodium != null){
       foreach($recipes as $recipe){
         $nutrition = $recipe['nutrition'];
@@ -72,7 +74,21 @@ try {
         if($nutrition[0]['amount'] > $maxCalories)
           throw new Exception("No recipes with selected filters", 400);
       }
-    } 
+    }
+    if ($maxCarbs != null && $maxCalories == null && $maxSodium == null && $maxSugar == null){
+      foreach($recipes as $recipe){
+        $nutrition = $recipe['nutrition'];
+        if($nutrition[0]['amount'] > $maxCarbs)
+          throw new Exception("No recipes with selected filters", 400);
+      }
+    }
+    if ($maxSodium != null && $maxCalories == null && $maxCarbs == null && $maxSugar == null){
+      foreach($recipes as $recipe){
+        $nutrition = $recipe['nutrition'];
+        if($nutrition[0]['amount'] > $maxSodium)
+          throw new Exception("No recipes with selected filters", 400);
+      }
+    }  
   // stub out response for front end
   echo json_encode(array("success" => true, "data" => array($recipes)));
 }

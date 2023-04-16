@@ -3,13 +3,17 @@ import '../css/Pantry.css';
   
 const Pantry = () => {
   loadIngredients();
-  return (
-    <div>
+    return (
+        
+        <div>
+
+
       <h1>
       Ingredients Pantry
       </h1>
       <input type={'text'} id="ingredients_query" placeholder="Filter ingredients..."
-        onInput={filterIngredients}></input>
+              onInput={filterIngredients}></input>
+
           <div id="categories_container" > </div>
       <button id="save_ingredients" style={{display: 'none'}} onClick={saveIngredients}>Save</button>
     </div>
@@ -58,7 +62,7 @@ function displayIngredients(data){
       //format Dairy1_container, Meat2_container
 
 
-
+ 
       
   }
 

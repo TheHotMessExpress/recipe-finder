@@ -118,13 +118,13 @@ const FoodSearch = () => {
                   <br></br> <br></br> <br></br>
         </form>
             </div>
-              <div id="recipe-results">
+              <div id="recipe-results-out">
 
       {/* Dietary filtering */}
 
-      <div id="dietFiltering">
-      <label>
-          <input
+     <div id="dietFiltering" >
+      <label class= "mx-4">
+          <input 
             type="radio"
             name="diet"
             value="vegan"
@@ -133,7 +133,7 @@ const FoodSearch = () => {
           />
           Vegan
         </label>
-        <label>
+        <label class="mx-4">
           <input
             type="radio"
             name="diet"
@@ -143,7 +143,7 @@ const FoodSearch = () => {
           />
           Vegetarian
         </label>
-        <label>
+        <label class="mx-4">
           <input
             type="radio"
             name="diet"
@@ -153,7 +153,7 @@ const FoodSearch = () => {
           />
           Gluten-Free
         </label>
-        <label>
+         <label class="mx-4">
           <input
             type="radio"
             name="diet"
@@ -176,10 +176,10 @@ const FoodSearch = () => {
 
       </div>
 
-        {/* Nutrition Filtering  */}
+        {/* Nutrition Filtering */}
         <div id="nutritionFiltering">
-        <label>Max Daily Calories:</label>
-            <input
+        <label >Max Daily Calories:</label>
+              <input class="me-3"
               type="number"
               name="maxDailyCalories"
               id="nutritionFilteringInput"
@@ -188,16 +188,17 @@ const FoodSearch = () => {
               min="0"
             />
             <label>Max Daily Carbs:</label>
-            <input
+            <input class="me-3"
               type="number"
               name="maxDailyCarbs"
               id="nutritionFilteringInput"
               value={nutritionFilters.maxDailyCarbs}
               onChange={handleNutritionFiltersChange}
               min="0"
-            />
+                  />
+                  <br></br>  <br></br>
             <label>Max Daily Sodium:</label>
-            <input
+              <input class="me-3"
               type="number"
               name="maxDailySodium"
               id="nutritionFilteringInput"
@@ -206,7 +207,7 @@ const FoodSearch = () => {
               min="0"
             />
             <label>Max Daily Sugar:</label>
-            <input
+              <input class="me-4"
               type="number"
               name="maxDailySugar"
               id="nutritionFilteringInput"

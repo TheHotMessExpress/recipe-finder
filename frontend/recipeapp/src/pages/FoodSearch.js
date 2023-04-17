@@ -2,6 +2,7 @@ import React from "react";
 import { useState } from "react";
 import "../index.css";
 import "../config.js";
+import notebook from "../images/notebook.png";
 
 //import notebook from "../images/notebook.png";
 const FoodSearch = () => {
@@ -123,9 +124,12 @@ const FoodSearch = () => {
               e.target.checked ? setUseIngredients(1) : setUseIngredients(0);
             }}
             id="ingredient_checkbox"
-          />
+                  />
+                  <br></br> <br></br> <br></br>
         </form>
-
+            </div>
+              <div id="recipe-results-out">
+                
         {/* Dietary filtering */}
 
         <div id="dietFiltering">
@@ -181,10 +185,10 @@ const FoodSearch = () => {
           </label>
         </div>
 
-        {/* Nutrition Filtering  */}
+        {/* Nutrition Filtering */}
         <div id="nutritionFiltering">
-        <label>Max Daily Calories:</label>
-            <input
+        <label >Max Daily Calories:</label>
+              <input class="me-3"
               type="number"
               name="maxDailyCalories"
               id="nutritionFilteringInput"
@@ -193,16 +197,17 @@ const FoodSearch = () => {
               min="0"
             />
             <label>Max Daily Carbs:</label>
-            <input
+            <input class="me-3"
               type="number"
               name="maxDailyCarbs"
               id="nutritionFilteringInput"
               value={nutritionFilters.maxDailyCarbs}
               onChange={handleNutritionFiltersChange}
               min="0"
-            />
+                  />
+                  <br></br>  <br></br>
             <label>Max Daily Sodium:</label>
-            <input
+              <input class="me-3"
               type="number"
               name="maxDailySodium"
               id="nutritionFilteringInput"
@@ -211,7 +216,7 @@ const FoodSearch = () => {
               min="0"
             />
             <label>Max Daily Sugar:</label>
-            <input
+              <input class="me-4"
               type="number"
               name="maxDailySugar"
               id="nutritionFilteringInput"
@@ -241,7 +246,9 @@ const FoodSearch = () => {
             ))
           ) : (
             <p>No results to display</p>
-          )}
+
+                  )}
+
         </div>
       </div>
     </body>

@@ -54,13 +54,13 @@ const Login = () => {
 
   return (
     <div>
-      <h1>
-      This is the "Login" Page
+      <h1 id="loginTitle">
+      Login
       </h1>
         <form onSubmit={handleSubmit}>
           <p id="login">
                 Username:
-                <input className="username" 
+                <input id="entry" class="form-control input-sm"
                   type="text"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
@@ -68,7 +68,7 @@ const Login = () => {
                 ></input>
                 <br></br><br></br>
                 Password:
-                <input className="password" 
+                <input id="entry" class="form-control input-sm"
                   type="password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}

@@ -11,31 +11,34 @@
  * @return array $list An array of recipes, each containing an id, title, and image.
 */
 // calls spoontacular API to get recipe results
-function getRecipes($query, $IngredientList, $useIngredients, $selectedDiet, $params, $nutrition){
-    $result;
+function getRecipes($query, $IngredientList, $use_ingredients, $params, $nutrition, $selected_diets = array()){
     // get api key
     global $spoontacular_api_key;
-    // build the query parameters string
     $query_params = array();
     $query_params['query'] = urlencode($query);
-    if (!empty($selectedDiet)) {
-        if ($selectedDiet == "dairy-free") {
-            $query_params['intolerances'] = 'dairy';
-        } else {
-            $query_params['diet'] = urlencode($selectedDiet);
-        }
-    }
-    // merge the query parameters array with the $params array passed to the function
-    $params = array_merge($query_params, $params);
-
-    $url = 'https://api.spoonacular.com/recipes/complexSearch?apiKey='.$spoontacular_api_key.'&' . http_build_query($params);
-
-    
-    if ($useIngredients == 0 || empty($IngredientList)){
+    $diets = array();
+    $intolerances = array();
+    if ($use_ingredients == 0 || empty($IngredientList)){
         // perform GET request to API
         $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL, $url);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        foreach ($selected_diets as $selectedDiet) {
+            if ($selectedDiet == 'dairy-free') {
+                $intolerances[] = 'dairy';
+            } else   {
+                $diets[] = $selectedDiet;
+            }
+        }   
+        if (!empty($diets)) {
+            $query_params['diet'] = implode(',', $diets);
+        }
+        if (!empty($intolerances)) {
+            $query_params['intolerances'] = implode(',', $intolerances);
+        }
+        // merge the query parameters array with the $params array passed to the function
+        $params = array_merge($query_params, $params);
+        $url = 'https://api.spoonacular.com/recipes/complexSearch?apiKey=' . $spoontacular_api_key . '&' . http_build_query($params);
+    curl_setopt($ch, CURLOPT_URL, $url);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 
         $result = curl_exec($ch);
         if (curl_errno($ch)) {
@@ -53,12 +56,26 @@ function getRecipes($query, $IngredientList, $useIngredients, $selectedDiet, $pa
             $url = 'https://api.spoonacular.com/recipes/complexSearch?apiKey='.$spoontacular_api_key.'&' . http_build_query($params);
             
         
-            // perform GET request to API
-            $ch = curl_init();
-
-            curl_setopt($ch, CURLOPT_URL, $url);
-        
-            curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        // perform GET request to API
+        $ch = curl_init();
+        foreach ($selected_diets as $selectedDiet) {
+            if ($selectedDiet == 'dairy-free') {
+                $intolerances[] = 'dairy';
+            } else   {
+                $diets[] = $selectedDiet;
+            }
+        }   
+        if (!empty($diets)) {
+            $query_params['diet'] = implode(',', $diets);
+        }
+        if (!empty($intolerances)) {
+            $query_params['intolerances'] = implode(',', $intolerances);
+        }
+        // merge the query parameters array with the $params array passed to the function
+        $params = array_merge($query_params, $params);
+        $url = 'https://api.spoonacular.com/recipes/complexSearch?apiKey=' . $spoontacular_api_key . '&' . http_build_query($params) . '&includeIngredients='.$StringIngredientList ;
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 
             $result = curl_exec($ch);
             if (curl_errno($ch)) {

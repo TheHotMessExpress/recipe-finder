@@ -144,7 +144,8 @@ img:hover#searchResultsImage{
   }
 
 div#dietFiltering {
-    text-align: center;
+    display: flex;
+    justify-content: space-evenly;
     padding-bottom: 10px;
     font-size: 20px;
     background-color: rgb(51, 26, 0);

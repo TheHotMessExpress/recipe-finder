@@ -6,6 +6,8 @@ import notebook from "../images/notebook.png";
 
 //import notebook from "../images/notebook.png";
 const FoodSearch = () => {
+  loadIngredients();
+
   const [inputText, setInputText] = useState("");
   const [useIngredients, setUseIngredients] = useState(0);
   const [recipes, setRecipes] = useState([]);
@@ -16,8 +18,6 @@ const FoodSearch = () => {
     maxDailySodium: "",
     maxDailySugar: "",
   })
-
-  
 
   const [selectedDiet, setSelectedDiet] = useState([]);
 
@@ -121,11 +121,19 @@ const FoodSearch = () => {
             type="checkbox"
             checked={useIngredients}
             onChange={function (e) {
-              e.target.checked ? setUseIngredients(1) : setUseIngredients(0);
+              if(e.target.checked){
+                setUseIngredients(1)
+                document.getElementById("user_ingredients").style.display = "";
+              }else{
+                setUseIngredients(0)
+                document.getElementById("user_ingredients").style.display = "none";
+              }
             }}
             id="ingredient_checkbox"
-                  />
-                  <br></br> <br></br> <br></br>
+          />
+          <p id="user_ingredients" style={{display: "none"}}>
+            Loading...
+          </p>
         </form>
             </div>
               <div id="recipe-results-out">
@@ -254,5 +262,63 @@ const FoodSearch = () => {
     </body>
   );
 };
+
+// loads and displays ingredients from the backend
+function loadIngredients(){
+  // load data
+  fetch(global.config.api_url + "/ingredient_information.php?token="+localStorage.getItem("user_token"), {
+    method: "GET",
+    headers: {
+      "content-type": "text/plain",
+      accept: "application/json",
+    },
+  })
+    .then((response) => response.json())
+    .then((response) => {
+      // display 
+      if (response["success"] === true) {
+        displayIngredients(response["data"]);
+      }else{
+        document.getElementById("user_ingredients").innerHTML = "Unable to load pantry ingredients";
+      }
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+}
+
+// displays ingredients to html
+function displayIngredients(data){
+  // clear container
+  let html = "<br><i>";
+
+  // count checked ingredients
+  let ingredient_count = 0;
+  for(let i = 0; i < data['ingredients'].length; i++){
+    if(data['ingredients'][i]['checked'] == 1){
+      ingredient_count++;
+    }
+  }
+
+  if(ingredient_count > 0){
+    // fill with ingredients
+    for(let i = 0; i < data['ingredients'].length; i++){
+      if(data['ingredients'][i]['checked'] == 1){
+        html += data['ingredients'][i]['name'] + ", ";
+      }
+    }
+
+    // remove trailing comma
+    html = html.substring(0, html.length - 2);
+  }else{
+    html += "Warning: you have no pantry ingredients selected.";
+  }
+
+  // close formatting
+  html += "</i>";
+
+  // update DOM
+  document.getElementById("user_ingredients").innerHTML = html;
+}
 
 export default FoodSearch;

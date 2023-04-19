@@ -61,7 +61,6 @@ form#searchbar {
     padding-top: 1%;
     background-color: RGB(139, 69, 19, 0.9);
     width:400px;
-    height: 80px;
     border-radius: 20px;
     color: lightgray;
 }

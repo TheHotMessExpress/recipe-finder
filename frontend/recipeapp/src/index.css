@@ -104,17 +104,14 @@ input#nutritionFilteringInput {
 #recipe-results {
     text-align: center;
     height: 600px;
-    width: 80%;
+    width: auto;
     color: white;
     overflow-y: scroll;
     scrollbar-width: thin;
-    margin-left: auto;
-    margin-right: auto;
+
     margin-top: auto;
-    margin-bottom: 20%;
     padding-top: 8%;
     border: 10px solid black;
-    border-radius: 20px;
     background: rgb(51, 26, 0,0.5);
     background-size: 100%;
     background-position-y: 0%;
@@ -359,10 +356,10 @@ h1#title_element {
 
 .category {
     --base: black;
-    margin-top: 5%;
+    margin-top: 2%;
     color: black;
     width: 400px;
-    height: 600px;
+    height: 25%;
     border-radius: 25px;
     font-size: 30px;
     border: 15px solid rgb(var(--base));
@@ -378,6 +375,9 @@ h1#title_element {
     .category:nth-child(3) {
         --base: 0, 179, 0;
     }
+#save_ingredients{
+    margin-bottom:10%;
+}
 
 /* Register */
 #regbox {

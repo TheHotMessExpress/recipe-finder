@@ -59,7 +59,7 @@ const Login = () => {
       </h1>
         <form onSubmit={handleSubmit}>
           <p id="login">
-                Username:
+                Email:
                 <input id="entry" class="form-control input-sm"
                   type="text"
                   value={email}

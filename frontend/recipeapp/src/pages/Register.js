@@ -59,8 +59,8 @@ const Register = () => {
 
   return (
     <div>
-      <h1>
-      This is "Register" Page
+          <h1 id="title_element">
+      Registration
       </h1>
         <form  onSubmit={handleSubmit}>
           <div id="regbox">

@@ -8,7 +8,7 @@ const Pantry = () => {
         <div>
 
 
-      <h1>
+            <h1 id="title_element">
       Ingredients Pantry
       </h1>
       <input type={'text'} id="ingredients_query" placeholder="Filter ingredients..."

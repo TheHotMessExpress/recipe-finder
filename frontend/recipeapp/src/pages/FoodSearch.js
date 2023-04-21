@@ -97,7 +97,9 @@ const FoodSearch = () => {
 
   return (
     <body id="foodSearchDiv">
-      <h1 id="title_element">Food Search</h1>
+      <h1 id="title_element">Welcome to Recipe Finder</h1>
+      <p id="searchDescription">This application can help you find a new favorite recipe or figure out
+          what to make for dinner with the ingredients in your own pantry!</p>
 
       <div>
         <form autoComplete="off" id="searchbar" onSubmit={handleSubmit}>

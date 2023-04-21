@@ -6,12 +6,12 @@ const Layout = () => {
   return (
     <>
           <div id="nav" class=" d-flex justify-content-center">
-            <Link to="/"> Home</Link> 
+            <Link to="/"> Recipe Search</Link> 
             <Link to="/login"> {loginText}</Link> 
             <Link to="/register"> Register</Link> 
-            <Link to="/food-search"> FoodSearch</Link>
             <Link to="/pantry"> Pantry</Link> 
-            <Link to="/some-recipe"> Recipe</Link> 
+            <Link to="/some-recipe"> Recently Viewed Recipe</Link> 
+            <Link to="/home"> About</Link>
     </div>
       
 

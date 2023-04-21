@@ -8,8 +8,8 @@ const Pantry = () => {
         <div>
 
 
-      <h1>
-      Ingredients Pantry
+      <h1 id="title_element">
+      Select the ingredients you have at home
       </h1>
       <input type={'text'} id="ingredients_query" placeholder="Filter ingredients..."
               onInput={filterIngredients}></input>

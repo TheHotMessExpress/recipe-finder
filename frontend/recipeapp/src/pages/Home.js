@@ -15,13 +15,7 @@ const Home = () => {
 
   return (
 
-    <div> 
-      <div>
-        <h1 id="title_element">Recipe Finder</h1>
-      </div>
-      <p id="siteDescription">Recipe Finder can help you find a new favorite recipe or figure out
-          what to make for dinner with the ingredients in your own pantry!
-      </p>
+    <div>   
       <p id="title2" class=".pe-3">
           Meet The Developers
       </p>

@@ -22,11 +22,11 @@ export default function App() {
       <Routes>
         
         <Route path="/" element={<Navigation />}>
-          <Route index element={<Home />} />
+          <Route index element={<FoodSearch />} />
           <Route path="login" element={<Login />} />
           <Route path="register" element={<Register />} />
           <Route path="pantry" element={<Pantry />} />
-          <Route path="food-search" element={<FoodSearch />} />
+          <Route path="home" element={<Home />} />
           <Route path="some-recipe" element={<SomeRecipe />} />
         </Route>
       </Routes>

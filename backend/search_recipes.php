@@ -54,6 +54,9 @@ try {
   }
     // fetch info from spoontacular
     $recipes = getRecipes($queryString, $IngredientList, $use_ingredients, $params, $nutrition, $selected_diets_array);
+    if (isset($recipes[0]['code']) && $recipes[0]['code'] == 402){
+      throw new Exception("Out of API Requests", 400);
+    }
     if ($maxCalories != null && $maxSodium != null){
       foreach($recipes as $recipe){
         $nutrition = $recipe['nutrition'];
@@ -88,7 +91,12 @@ try {
         if($nutrition[0]['amount'] > $maxSodium)
           throw new Exception("No recipes with selected filters", 400);
       }
-    }  
+    }
+    if ($use_ingredients != 0) {
+      if (!$recipes){
+        throw new Exception("No recipes with selected filters", 400);
+      }
+    } 
   // stub out response for front end
   echo json_encode(array("success" => true, "data" => array($recipes)));
 }

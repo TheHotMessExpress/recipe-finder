@@ -79,6 +79,9 @@ const FoodSearch = () => {
           if(response['error']['message'] === "No recipes with selected filters"){
             alert("No recipes found with selected filters");
           }
+          if(response['error']['message'] === "Out of API Requests"){
+            alert("Out of API Requests");
+          }
         }
       })
       .catch((err) => {

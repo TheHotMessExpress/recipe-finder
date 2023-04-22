@@ -51,9 +51,12 @@ function getRecipes($query, $IngredientList, $use_ingredients, $params, $nutriti
             foreach($IngredientList as $ingredient){
                 $ingredientNames[] = $ingredient['name'];
             }
-            $StringIngredientList = implode(', ',$ingredientNames);
-            $params[] = 'includeIngredients=' . urlencode($StringIngredientList);
-            $url = 'https://api.spoonacular.com/recipes/complexSearch?apiKey='.$spoontacular_api_key.'&' . http_build_query($params);
+            $query_params['query'] = urlencode($query);
+            $params = array_merge($query_params, $params);
+            $StringIngredientList = implode(',',$ingredientNames);
+            // $params['includeIngredients'] = $StringIngredientList;
+            $url = 'https://api.spoonacular.com/recipes/complexSearch?apiKey='.$spoontacular_api_key . '&' . http_build_query($params) . '&fillIngredients=true';
+            
             
         
         // perform GET request to API
@@ -73,7 +76,7 @@ function getRecipes($query, $IngredientList, $use_ingredients, $params, $nutriti
         }
         // merge the query parameters array with the $params array passed to the function
         $params = array_merge($query_params, $params);
-        $url = 'https://api.spoonacular.com/recipes/complexSearch?apiKey=' . $spoontacular_api_key . '&' . http_build_query($params) . '&includeIngredients='.$StringIngredientList ;
+        $url = 'https://api.spoonacular.com/recipes/complexSearch?apiKey=' . $spoontacular_api_key . '&' . http_build_query($params) . '&includeIngredients='.$StringIngredientList . '&fillIngredients=true';
         curl_setopt($ch, CURLOPT_URL, $url);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 
@@ -86,6 +89,11 @@ function getRecipes($query, $IngredientList, $use_ingredients, $params, $nutriti
     // format data
     $response = json_decode($result, true);
     $list = array();
+    $http_status = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+    if($http_status == 402){
+        $list[] = array("code" => $response['code']);
+        return $list;
+    }
     if($nutrition == false){
         foreach($response['results'] as $recipe){
             $list[] = array("id" => $recipe['id'], "title" => $recipe['title'], "image" => $recipe['image']);

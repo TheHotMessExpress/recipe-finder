@@ -110,7 +110,7 @@ function saveIngredients(){
       // display 
       if (response["success"] === true) {
           // redirect
-          window.location.href = "/food-search";
+          window.location.href = "/";
       }else{
         alert("Unable to save ingredients");
         console.log(response);

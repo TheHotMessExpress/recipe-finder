@@ -197,7 +197,7 @@ const FoodSearch = () => {
 
         {/* Nutrition Filtering */}
         <div id="nutritionFiltering">
-        <label >Max Daily Calories:</label>
+                  <label >Max Daily Calories %:</label>
               <input class="me-3"
               type="number"
               name="maxDailyCalories"
@@ -206,7 +206,7 @@ const FoodSearch = () => {
               onChange={handleNutritionFiltersChange}
               min="0"
             />
-            <label>Max Daily Carbs:</label>
+            <label>Max Daily Carbs %:</label>
             <input class="me-3"
               type="number"
               name="maxDailyCarbs"
@@ -216,7 +216,7 @@ const FoodSearch = () => {
               min="0"
                   />
                   <br></br>  <br></br>
-            <label>Max Daily Sodium:</label>
+            <label>Max Daily Sodium %:</label>
               <input class="me-3"
               type="number"
               name="maxDailySodium"
@@ -225,7 +225,7 @@ const FoodSearch = () => {
               onChange={handleNutritionFiltersChange}
               min="0"
             />
-            <label>Max Daily Sugar:</label>
+            <label>Max Daily Sugar %:</label>
               <input class="me-4"
               type="number"
               name="maxDailySugar"

@@ -16,9 +16,10 @@ const Home = () => {
   return (
 
     <div>   
-      <p id="title2" class=".pe-3">
-          Meet The Developers
-      </p>
+      <h1 id="title_element">
+        Meet The Developers
+      </h1>
+      <br/>
       <div id="float-container">
         <div id="developerCard"><h1 id="developerName">Andrew</h1>
           <img id="developerPicture" src={andrew}></img>

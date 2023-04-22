@@ -197,7 +197,7 @@ const FoodSearch = () => {
 
         {/* Nutrition Filtering */}
         <div id="nutritionFiltering">
-                  <label >Max Daily Calories &nbsp; &nbsp;:</label>
+                  <label >Max Daily Calories %:</label>
               <input class="me-3"
               type="number"
               name="maxDailyCalories"

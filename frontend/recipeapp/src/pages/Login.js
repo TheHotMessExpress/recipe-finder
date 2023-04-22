@@ -54,19 +54,18 @@ const Login = () => {
 
   return (
     <div>
-      <h1 id="loginTitle">
+          <h1 id="title_element">
       Login
       </h1>
         <form onSubmit={handleSubmit}>
           <p id="login">
-                Username:
+                Email:
                 <input id="entry" class="form-control input-sm"
                   type="text"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   required
                 ></input>
-                <br></br><br></br>
                 Password:
                 <input id="entry" class="form-control input-sm"
                   type="password"
@@ -75,7 +74,7 @@ const Login = () => {
                   required
                   minLength={8}
                 ></input>
-                <br></br><br></br>
+                <br/>
                 <button  id="loginButton"
                   type="submit"
                 >Log In</button>

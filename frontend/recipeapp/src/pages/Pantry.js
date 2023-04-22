@@ -16,7 +16,10 @@ const Pantry = () => {
 
           <div id="categories_container" > </div>
       <button id="save_ingredients" style={{display: 'none'}} onClick={saveIngredients}>Save</button>
+
+
     </div>
+
   );
 };
 

@@ -100,17 +100,15 @@ input#nutritionFilteringInput {
 #recipe-results {
     text-align: center;
     height: 600px;
-    width: 80%;
+    width: auto;
     color: white;
     overflow-y: scroll;
     scrollbar-width: thin;
-    margin-left: auto;
-    margin-right: auto;
+
     margin-top: auto;
-    margin-bottom: 20%;
     padding-top: 8%;
+    padding-left: 3%;
     border: 10px solid black;
-    border-radius: 20px;
     background: rgb(51, 26, 0,0.5);
     background-size: 100%;
     background-position-y: 0%;
@@ -300,10 +298,14 @@ p#siteDescription {
 }
 
 h1#title_element {
+    margin-top: 2%;
     font-size: 50px;
     font-weight: 600;
     font-family: Arial, Helvetica, sans-serif;
     color: #804200;
+    background-color: #ffffe6;
+    border: 5px solid saddlebrown;
+
 }
 
 p#searchDescription{
@@ -311,7 +313,7 @@ p#searchDescription{
     text-align: center;
     background-color: #ffffe6;
     color: black;
-    width: 35%;
+    width: 40%;
     height: auto;
     margin: auto;
     padding-bottom: 2%;
@@ -328,14 +330,19 @@ p#searchDescription{
     border-radius: 13px;
     border: 5px solid black;
     text-align: center;
-    width: 350px;
+    width: auto;
+    min-width: 200px;
     padding-top: 1%;
     padding-bottom: 2%;
-    margin-left: auto;
-    margin-right: auto;
-    margin-top:2%;
+    margin-left: 33%;
+    margin-right: 33%;
+    margin-top: 2%;
     color: white;
 }
+
+/* Login */
+
+
 
 #login {
     font-size: 30px;
@@ -344,6 +351,7 @@ p#searchDescription{
     height: 15%;
     margin-left: auto;
     margin-right:auto;
+    margin-top: 5%;
     padding-top: 3%;
     padding-bottom:2%;
     color: white;
@@ -373,10 +381,10 @@ p#searchDescription{
 
 .category {
     --base: black;
-    margin-top: 5%;
+    margin-top: 2%;
     color: black;
     width: 400px;
-    height: 600px;
+    height: 25%;
     border-radius: 25px;
     font-size: 30px;
     border: 15px solid rgb(var(--base));
@@ -392,6 +400,9 @@ p#searchDescription{
     .category:nth-child(3) {
         --base: 0, 179, 0;
     }
+#save_ingredients{
+    margin-bottom:10%;
+}
 
 /* Register */
 #regbox {

@@ -66,7 +66,6 @@ const Login = () => {
                   onChange={(e) => setEmail(e.target.value)}
                   required
                 ></input>
-                <br></br><br></br>
                 Password:
                 <input id="entry" class="form-control input-sm"
                   type="password"
@@ -75,7 +74,7 @@ const Login = () => {
                   required
                   minLength={8}
                 ></input>
-                <br></br><br></br>
+                <br/>
                 <button  id="loginButton"
                   type="submit"
                 >Log In</button>
